@@ -1,6 +1,7 @@
 package com.myrecipe.entity;
 
 import com.myrecipe.constant.RecipeLevel;
+import com.myrecipe.dto.RecipeFormDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,10 +13,11 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
-public class Recipe {
+public class Recipe extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="recipe_id")
     private Long id; // 레시피 코드
 
     @Column(nullable = false, length = 50)
@@ -24,18 +26,21 @@ public class Recipe {
     @Column(nullable = false)
     private int price; // 예상 가격
 
-    @Column(nullable = false)
-    private int recommendation; // 추천수
+//    @Column(nullable = false)
+//    private int recommendation; // 추천수
 
     @Lob
     @Column(nullable = false)
     private String recipeDetail; // 레시피 상세 설명
 
     @Enumerated(EnumType.STRING)
-    private RecipeLevel recipeLevel;
+    private RecipeLevel recipeLevel; // 요리 난이도
 
-    private LocalDateTime regTime; // 레시피 등록 시간
-    private LocalDateTime updateTime; // 레시피 수정 시간
-
+    public void updateRecipe(RecipeFormDto recipeFormDto) {
+        this.recipeName = recipeFormDto.getRecipeName();
+        this.price = recipeFormDto.getPrice();
+        this.recipeDetail = recipeFormDto.getRecipeDetail();
+        this.recipeLevel = recipeFormDto.getRecipeLevel();
+    }
 
 }

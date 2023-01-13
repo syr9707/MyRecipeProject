@@ -42,7 +42,7 @@ class RecipeRepositoryTest {
         recipe.setPrice(30000);
         recipe.setRecipeDetail("테스트 레시피 상세 설명");
         recipe.setRecipeLevel(RecipeLevel.EASY);
-        recipe.setRecommendation(0);
+//        recipe.setRecommendation(0);
         recipe.setRegTime(LocalDateTime.now());
         recipe.setUpdateTime(LocalDateTime.now());
         Recipe savedRecipe = recipeRepository.save(recipe);
@@ -56,7 +56,7 @@ class RecipeRepositoryTest {
             recipe.setPrice(30000 + i);
             recipe.setRecipeDetail("테스트 레시피 상세 설명" + i);
             recipe.setRecipeLevel(RecipeLevel.EASY);
-            recipe.setRecommendation(0);
+//            recipe.setRecommendation(0);
             recipe.setRegTime(LocalDateTime.now());
             recipe.setUpdateTime(LocalDateTime.now());
             Recipe savedRecipe = recipeRepository.save(recipe);
@@ -138,7 +138,7 @@ class RecipeRepositoryTest {
             recipe.setPrice(30000 + i);
             recipe.setRecipeDetail("테스트 레시피 상세 설명" + i);
             recipe.setRecipeLevel(RecipeLevel.EASY);
-            recipe.setRecommendation(0);
+//            recipe.setRecommendation(0);
             recipe.setRegTime(LocalDateTime.now());
             recipe.setUpdateTime(LocalDateTime.now());
             Recipe savedRecipe = recipeRepository.save(recipe);
@@ -150,7 +150,7 @@ class RecipeRepositoryTest {
             recipe.setPrice(30000 + i);
             recipe.setRecipeDetail("테스트 레시피 상세 설명" + i);
             recipe.setRecipeLevel(RecipeLevel.HARD);
-            recipe.setRecommendation(0);
+//            recipe.setRecommendation(0);
             recipe.setRegTime(LocalDateTime.now());
             recipe.setUpdateTime(LocalDateTime.now());
             Recipe savedRecipe = recipeRepository.save(recipe);
