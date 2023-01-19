@@ -39,7 +39,7 @@ public class RecipeImgService {
         }
 
         // 레시피 이미지 정보 저장
-        recipeImg.updateItemImg(oriImgName, imgName, imgUrl);
+        recipeImg.updateRecipeImg(oriImgName, imgName, imgUrl);
         recipeImgRepository.save(recipeImg);
     }
 
@@ -56,7 +56,7 @@ public class RecipeImgService {
             String oriImgName = recipeImgFile.getOriginalFilename();
             String imgName = fileService.uploadFile(recipeImgLocation, oriImgName, recipeImgFile.getBytes());
             String imgUrl = "/images/recipe/" + imgName;
-            savedRecipeImg.updateItemImg(oriImgName, imgName, imgUrl);
+            savedRecipeImg.updateRecipeImg(oriImgName, imgName, imgUrl);
         }
     }
 

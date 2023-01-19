@@ -110,7 +110,7 @@
         </div>
 
         <div th:if = "${not #lists.isEmpty(recipeFormDto.recipeImgDtoList)}">
-            <div class="form-group" th:each="recipeFormDto, status: ${recipeFormDto.recipeImgDtoList}">
+            <div class="form-group" th:each="recipeImgDto, status: ${recipeFormDto.recipeImgDtoList}">
                 <div class="custom-file img-div">
                     <input type="file" class="custom-file-input" name="recipeImgFile">
                     <input type="hidden" name="recipeImgIds" th:value="${recipeImgDto.id}">

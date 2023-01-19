@@ -6,6 +6,8 @@ import com.myrecipe.dto.RecipeImgDto;
 import com.myrecipe.dto.RecipeSearchDto;
 import com.myrecipe.entity.Recipe;
 import com.myrecipe.entity.RecipeImg;
+import com.myrecipe.exception.AppException;
+import com.myrecipe.exception.ErrorCode;
 import com.myrecipe.repository.RecipeImgRepository;
 import com.myrecipe.repository.RecipeRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,12 @@ public class RecipeService {
     private final RecipeImgService recipeImgService;
 
     public Long saveRecipe(RecipeFormDto recipeFormDto, List<MultipartFile> recipeImgFileList) throws Exception {
+
+        // recipeName 중복 체크
+//        List<Recipe> findRecipe = recipeRepository.findByRecipeName(recipeFormDto.getRecipeName());
+//        if(findRecipe != null) {
+//            throw new AppException(ErrorCode.RECIPENAME_DUPLICATED, recipeFormDto.getRecipeName() + "는 이미 있습니다.");
+//        }
 
         // 레시피 등록
         Recipe recipe = recipeFormDto.createRecipe();

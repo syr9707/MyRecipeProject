@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Table(name = "recipe_img")
 @Entity
-public class RecipeImg {
+public class RecipeImg extends BaseEntity {
 
     @Id
     @Column(name="recipe_img_id")
@@ -28,7 +28,7 @@ public class RecipeImg {
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 
-    public void updateItemImg(String oriImgName, String imgName, String imgUrl){
+    public void updateRecipeImg(String oriImgName, String imgName, String imgUrl){
         this.oriImgName = oriImgName;
         this.imgName = imgName;
         this.imgUrl = imgUrl;
