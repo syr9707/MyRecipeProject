@@ -1,6 +1,8 @@
 package com.myrecipe.service;
 
 import com.myrecipe.entity.Member;
+import com.myrecipe.exception.AppException;
+import com.myrecipe.exception.ErrorCode;
 import com.myrecipe.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -30,7 +32,8 @@ public class MemberService implements UserDetailsService {
     private void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
         if(findMember != null) {
-            throw new IllegalStateException("이미 가입된 회원입니다.");
+//            throw new IllegalStateException("이미 가입된 회원입니다.");
+            throw new AppException(ErrorCode.MEMBERNAME_DUPLICATED, findMember.getName() + "은 이미 있습니다.");
         }
     }
 
