@@ -2,6 +2,7 @@ package com.myrecipe.service;
 
 import com.myrecipe.dto.MemberFormDto;
 import com.myrecipe.entity.Member;
+import com.myrecipe.exception.AppException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +45,26 @@ class MemberServiceTest {
         assertEquals(member.getRole(), savedMember.getRole());
     }
 
+//    @Test
+//    @DisplayName("중복 회원 가입 테스트")
+//    public void saveDuplicateMemberTest(){
+//        Member member1 = createMember();
+//        Member member2 = createMember();
+//        memberService.saveMember(member1);
+//        Throwable e = assertThrows(IllegalStateException.class, () -> {
+//            memberService.saveMember(member2);});
+//        assertEquals("이미 가입된 회원입니다.", e.getMessage());
+//    }
+
     @Test
     @DisplayName("중복 회원 가입 테스트")
     public void saveDuplicateMemberTest(){
         Member member1 = createMember();
         Member member2 = createMember();
         memberService.saveMember(member1);
-        Throwable e = assertThrows(IllegalStateException.class, () -> {
+        Throwable e = assertThrows(AppException.class, () -> {
             memberService.saveMember(member2);});
-        assertEquals("이미 가입된 회원입니다.", e.getMessage());
+        assertEquals("김길동은 이미 있습니다.", e.getMessage());
     }
 
 }
