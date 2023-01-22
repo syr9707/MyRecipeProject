@@ -23,7 +23,7 @@ public class MainController {
     public String main(RecipeSearchDto recipeSearchDto, Optional<Integer> page, Model model){
 
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
-        Page<MainItemDto> recipes = recipeService.getMainItemPage(recipeSearchDto, pageable);
+        Page<MainItemDto> recipes = recipeService.getMainRecipePage(recipeSearchDto, pageable);
 
         model.addAttribute("recipes", recipes);
         model.addAttribute("recipeSearchDto", recipeSearchDto);

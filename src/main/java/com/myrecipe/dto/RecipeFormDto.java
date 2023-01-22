@@ -45,10 +45,15 @@ public class RecipeFormDto {
      * modelMapper를 이용하여 엔티티 객체와 DTO 객체 간의 데이터를 복사하여
      * 복사한 객체를 반환해주는 메소드
      * */
+    /**
+     * - Entity -> DTO = of()
+     * - DTO -> Entitty = toEntity()
+     * */
     public Recipe createRecipe() {
         return modelMapper.map(this, Recipe.class);
     }
 
+    // Entity -> DTO
     public static RecipeFormDto of(Recipe recipe) {
         return modelMapper.map(recipe, RecipeFormDto.class);
     }

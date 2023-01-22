@@ -9,7 +9,7 @@ import lombok.Setter;
 public class RecipeSearchDto {
 
     private String searchDateType;
-    private RecipeLevel searchRecipeLevel;
+    private RecipeLevel searchLevel;
     private String searchBy;
     private String searchQuery = "";
 

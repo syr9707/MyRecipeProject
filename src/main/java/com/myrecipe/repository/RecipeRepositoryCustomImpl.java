@@ -66,7 +66,7 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
         List<Recipe> content = queryFactory
                 .selectFrom(QRecipe.recipe)
                 .where(regDtsAfter(recipeSearchDto.getSearchDateType()),
-                        searchLevelEq(recipeSearchDto.getSearchRecipeLevel()),
+                        searchLevelEq(recipeSearchDto.getSearchLevel()),
                         searchByLike(recipeSearchDto.getSearchBy(), recipeSearchDto.getSearchQuery()))
                 .orderBy(QRecipe.recipe.id.desc())
                 .offset(pageable.getOffset())
@@ -75,7 +75,7 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
 
         long total = queryFactory.select(Wildcard.count).from(QRecipe.recipe)
                 .where(regDtsAfter(recipeSearchDto.getSearchDateType()),
-                        searchLevelEq(recipeSearchDto.getSearchRecipeLevel()),
+                        searchLevelEq(recipeSearchDto.getSearchLevel()),
                         searchByLike(recipeSearchDto.getSearchBy(), recipeSearchDto.getSearchQuery()))
                 .fetchOne()
                 ;

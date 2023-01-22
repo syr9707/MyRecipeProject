@@ -98,7 +98,7 @@ public class RecipeService {
     }
 
     @Transactional(readOnly = true)
-    public Page<MainItemDto> getMainItemPage(RecipeSearchDto recipeSearchDto, Pageable pageable) {
+    public Page<MainItemDto> getMainRecipePage(RecipeSearchDto recipeSearchDto, Pageable pageable) {
         return recipeRepository.getMainRecipePage(recipeSearchDto, pageable);
     }
 
