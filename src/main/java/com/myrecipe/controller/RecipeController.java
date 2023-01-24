@@ -1,6 +1,8 @@
 package com.myrecipe.controller;
 
 import com.myrecipe.dto.RecipeFormDto;
+import com.myrecipe.exception.AppException;
+import com.myrecipe.exception.ErrorCode;
 import com.myrecipe.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -75,7 +77,7 @@ public class RecipeController {
         }
 
         if(recipeImgFileList.get(0).isEmpty() && recipeFormDto.getId() == null) {
-            model.addAttribute("errorMessage", "첫 번째 레시피 이미지는 필수 입력 값 입니다.");
+            model.addAttribute("errorMessage", "첫번째 음식 이미지는 필수 입력 값 입니다.");
             return "recipe/recipeForm";
         }
 

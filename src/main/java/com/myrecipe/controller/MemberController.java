@@ -2,6 +2,7 @@ package com.myrecipe.controller;
 
 import com.myrecipe.dto.MemberFormDto;
 import com.myrecipe.entity.Member;
+import com.myrecipe.exception.AppException;
 import com.myrecipe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,7 @@ public class MemberController {
         try {
             Member member = Member.createMember(memberFormDto, passwordEncoder);
             memberService.saveMember(member);
-        } catch (IllegalStateException e){
+        } catch (AppException e){
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
         }

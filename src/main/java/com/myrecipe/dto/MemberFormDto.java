@@ -11,6 +11,11 @@ import javax.validation.constraints.NotEmpty;
 /**
  * 회원 가입으로부터 넘어오는 가입정보를 담을 dto
  * */
+/**
+ * VO(Value Object) vs DTO
+ *   * VO는 DTO와 동일한 개념이지만 read only 속성을 갖는다.
+ *   * VO는 특정한 비즈니스 값을 담는 객체이고, DTO는 Layer간의 통신 용도로 오고가는 객체를 말한다.
+ * */
 @Setter
 @Getter
 public class MemberFormDto {

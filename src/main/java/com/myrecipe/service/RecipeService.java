@@ -45,6 +45,11 @@ public class RecipeService {
         Recipe recipe = recipeFormDto.createRecipe();
         recipeRepository.save(recipe);
 
+//        if(recipeImgFileList.get(0).isEmpty() && recipeFormDto.getId() == null) {
+//            throw new AppException(ErrorCode.RECIPEIMG_NULL, "첫 번째 레시피 이미지는 필수 입력 값 입니다.");
+//        }
+
+
         // 이미지 등록
         for(int i = 0; i < recipeImgFileList.size(); i++) {
             RecipeImg recipeImg = new RecipeImg();
