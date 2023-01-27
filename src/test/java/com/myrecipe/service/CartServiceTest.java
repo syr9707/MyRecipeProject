@@ -6,6 +6,7 @@ import com.myrecipe.entity.Cart;
 import com.myrecipe.entity.CartRecipe;
 import com.myrecipe.entity.Member;
 import com.myrecipe.entity.Recipe;
+import com.myrecipe.exception.AppException;
 import com.myrecipe.repository.CartRecipeRepository;
 import com.myrecipe.repository.MemberRepository;
 import com.myrecipe.repository.RecipeRepository;
@@ -66,6 +67,24 @@ class CartServiceTest {
                 .orElseThrow(EntityNotFoundException::new);
 
         assertEquals(recipe.getId(), cartRecipe.getRecipe().getId());
+    }
+
+    @Test
+    @DisplayName("마이페이지 중복 레시피 저장 테스트")
+    public void saveDuplicateCartTest() {
+        Recipe recipe = saveRecipe();
+        Member member = saveMember();
+
+        CartRecipeDto cartRecipeDto = new CartRecipeDto();
+        cartRecipeDto.setRecipeId(recipe.getId());
+
+        Long cartRecipeId = cartService.addCart(cartRecipeDto, member.getEmail());
+        CartRecipe cartRecipe = cartRecipeRepository.findById(cartRecipeId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        Throwable e = assertThrows(AppException.class, () -> {
+            cartService.addCart(cartRecipeDto, member.getEmail());});
+        assertEquals(recipe.getRecipeName() + "은 이미 저장되어있습니다.", e.getMessage());
     }
 
 }

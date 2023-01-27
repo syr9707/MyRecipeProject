@@ -9,11 +9,14 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.web.servlet.MockMvc;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -25,6 +28,7 @@ import static com.myrecipe.entity.QRecipe.recipe;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application-test.properties")
 class RecipeRepositoryTest {
 
@@ -33,6 +37,9 @@ class RecipeRepositoryTest {
 
     @PersistenceContext
     EntityManager em;
+
+    @Autowired
+    MockMvc mockMvc;
 
     @Test
     @DisplayName("레시피 저장 테스트")
