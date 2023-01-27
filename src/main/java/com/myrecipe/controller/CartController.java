@@ -2,6 +2,7 @@ package com.myrecipe.controller;
 
 import com.myrecipe.dto.CartDetailDto;
 import com.myrecipe.dto.CartRecipeDto;
+import com.myrecipe.exception.AppException;
 import com.myrecipe.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping(value = "/cart")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartRecipeDto cartRecipeDto, BindingResult bindingResult, Principal principal) {
+    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartRecipeDto cartRecipeDto, BindingResult bindingResult, Principal principal, Model model) {
 
         if (bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();
@@ -39,9 +40,16 @@ public class CartController {
         String email = principal.getName();
         Long cartRecipeId;
 
+//        try {
+//            cartRecipeId = cartService.addCart(cartRecipeDto, email);
+//        } catch (Exception e) {
+//            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+//        }
+
         try {
             cartRecipeId = cartService.addCart(cartRecipeDto, email);
-        } catch (Exception e) {
+        } catch (AppException e) {
+            model.addAttribute("errorMessage", e.getMessage());
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 

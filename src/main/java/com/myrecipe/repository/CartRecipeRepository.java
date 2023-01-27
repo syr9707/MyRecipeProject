@@ -21,4 +21,6 @@ public interface CartRecipeRepository extends JpaRepository<CartRecipe, Long> {
 
     List<CartDetailDto> findCartDetailDtoList(Long cartId);
 
+//    CartRecipe findByCartIdAndRecipeIdAndMemberId(Long cartId, Long recipeId, Long memberId);
+
 }

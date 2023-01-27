@@ -15,7 +15,10 @@ public enum ErrorCode {
     RECIPENAME_DUPLICATED(HttpStatus.CONFLICT, ""),
 
     // 레시피 이미지 등록하지 않은 경우
-    RECIPEIMG_NULL(HttpStatus.NOT_FOUND, "");
+    RECIPEIMG_NULL(HttpStatus.NOT_FOUND, ""),
+
+    // 레시피 중복 저장
+    CART_RECIPE_DUPLICATED(HttpStatus.CONFLICT, "");
 
     private HttpStatus httpStatus;
     private String message;

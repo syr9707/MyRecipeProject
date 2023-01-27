@@ -13,6 +13,13 @@
 
     <script th:inline="javascript">
 
+    $(document).ready(function(){
+        var errorMessage = [[${errorMessage}]];
+        if(errorMessage != null){
+            alert(errorMessage);
+        }
+    });
+
 <!--        $(document).ready(function(){-->
 <!--            $("input[name=cartChkBox]").change( function(){-->
 <!--                getOrderTotalPrice();-->
@@ -195,7 +202,7 @@
 <div layout:fragment="content" class="content-mg">
 
     <h2 class="mb-4">
-        장바구니 목록
+        저장한 레시피 목록
     </h2>
 
     <div>
@@ -209,16 +216,15 @@
             <thead>
             <tr class="text-center">
                 <td>
-                    <input type="checkbox" id="checkall" onclick="checkAll()"> 전체선택
+<!--                    <input type="checkbox" id="checkall" onclick="checkAll()"> 전체선택-->
                 </td>
-                <td>상품정보</td>
-                <td>상품금액</td>
+                <td>레시피 목록</td>
             </tr>
             </thead>
             <tbody>
             <tr th:each="cartRecipe : ${cartRecipes}">
                 <td class="text-center align-middle">
-                    <input type="checkbox" name="cartChkBox" th:value="${cartRecipe.cartRecipeId}">
+<!--                    <input type="checkbox" name="cartChkBox" th:value="${cartRecipe.cartRecipeId}">-->
                 </td>
                 <td class="d-flex">
                     <div class="repImgDiv align-self-center">
