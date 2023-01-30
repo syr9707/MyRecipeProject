@@ -29,10 +29,15 @@ public class MemberService implements UserDetailsService {
         return memberRepository.save(member);
     }
 
+    /**
+     * 회원가입 중복 검사
+     * 이메일 중복 불가능
+     * */
     private void validateDuplicateMember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
+        Member findMember = memberRepository.findByEmail(member.getEmail()); // 이메일로 찾은 회원을 Member에 담는다.
         if(findMember != null) {
 //            throw new IllegalStateException("이미 가입된 회원입니다.");
+            // 예외처리
             throw new AppException(ErrorCode.MEMBERNAME_DUPLICATED, findMember.getName() + "은 이미 있습니다.");
         }
     }
