@@ -14,6 +14,7 @@ public interface RecipeRepositoryCustom {
      * */
     Page<Recipe> getAdminRecipePage(RecipeSearchDto recipeSearchDto, Pageable pageable);
 
+    // 반환 타입 : Page<MainItemDTO>
     Page<MainItemDto> getMainRecipePage(RecipeSearchDto recipeSearchDto, Pageable pageable);
 
 }

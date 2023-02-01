@@ -85,6 +85,12 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * 검색어가 null이 아니면, 게시물명에 해당 검색어가 포함되는 게시물을 조회하는 조건 반환
+     *
+     * BooleanExpression ; null 반환 시 자동으로 조건절에서 제거됨
+     * 단, 모든 조건이 null인 경우 장애 발생
+     * */
     private BooleanExpression recipeNameLike(String searchQuery) {
         return StringUtils.isEmpty(searchQuery) ? null : QRecipe.recipe.recipeName.like("%" + searchQuery + "%");
     }
@@ -96,7 +102,7 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
 
         List<MainItemDto> content = queryFactory
                 .select(
-                        new QMainItemDto(
+                        new QMainItemDto( // QMainItemDto의 생성자에 반환할 값 넣어줌. @QueryProjection 덕분에 엔티티 조회 후 DTO 변환 과정 없이 DTO로 바로 조회 가능.
                                 recipe.id,
                                 recipe.recipeName,
                                 recipe.recipeDetail,
@@ -104,8 +110,8 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
                                 recipe.price)
                 )
                 .from(recipeImg)
-                .join(recipeImg.recipe, recipe)
-                .where(recipeImg.repimgYn.eq("Y"))
+                .join(recipeImg.recipe, recipe) // RecipeImg와 Recipe를 내부 조인
+                .where(recipeImg.repimgYn.eq("Y")) // 대표 이미지만 가져옴
                 .where(recipeNameLike(recipeSearchDto.getSearchQuery()))
                 .orderBy(recipe.id.desc())
                 .offset(pageable.getOffset())
@@ -113,7 +119,7 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
                 .fetch();
 
         long total = queryFactory
-                .select(Wildcard.count)
+                .select(Wildcard.count) // select count(*)
                 .from(recipeImg)
                 .join(recipeImg.recipe, recipe)
                 .where(recipeImg.repimgYn.eq("Y"))
@@ -121,6 +127,8 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
                 .fetchOne()
                 ;
 
+        // Page<User> page = new PageImpl<>(users.subList(start, end), pageable, users.size());
+        // content의 타입을 바꿔준 list, pageable, 총 데이터 개수
         return new PageImpl<>(content, pageable, total);
     }
 }

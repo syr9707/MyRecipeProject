@@ -52,11 +52,11 @@
             <div class="col-md-4 margin">
                 <div class="card">
                     <a th:href="'/recipe/' +${recipe.id}" class="text-dark">
-                        <img th:src="${recipe.imgUrl}" class="card-img-top" th:alt="${recipe.recipeName}" height="400">
+                        <img th:src="${recipe.imgUrl}" class="card-img-top" th:alt="${recipe.recipeName}" height="200">
                         <div class="card-body">
                             <h4 class="card-title">[[${recipe.recipeName}]]</h4>
-                            <p class="card-text">[[${recipe.recipeDetail}]]</p>
-                            <h3 class="card-title text-danger">[[${recipe.price}]]원</h3>
+                            <p class="card-title text-danger">[[${recipe.recipeDetail}]]</p>
+                            <h3 class="card-text">[[${recipe.price}]]원</h3>
                         </div>
                     </a>
                 </div>

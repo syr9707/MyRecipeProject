@@ -143,7 +143,7 @@
 
     <div class="d-flex">
         <div class="repImgDiv">
-            <img th:src="${recipe.recipeImgDtoList[0].imgUrl}" class = "rounded repImg" th:alt="${recipe.recipeName}">
+            <img th:src="${recipe.recipeImgDtoList[0].imgUrl}" class = "rounded repImg" height="300" th:alt="${recipe.recipeName}">
         </div>
         <div class="wd50">
 <!--            <span th:if="${recipe.recipeLevel == T(com.myrecipe.constant.RecipeLevel).EASY}" class="badge badge-primary mgb-15">-->
@@ -156,8 +156,9 @@
             <hr class="my-4">
 
             <div class="text-right">
-                <div class="h4 text-danger text-left">
+                <div class="h4 text-left">
                     <input type="hidden" th:value="${recipe.price}" id="price" name="price">
+                    레시피 예상 가격<br>
                     <span th:text="${recipe.price}"></span>원
                 </div>
 <!--&lt;!&ndash;                <div class="input-group w-50">&ndash;&gt;-->
@@ -174,7 +175,7 @@
 <!--&lt;!&ndash;                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>&ndash;&gt;-->
 <!--&lt;!&ndash;            </div>&ndash;&gt;-->
             <div class="text-right">
-                <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>
+                <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">마이페이지 저장</button>
 <!--&lt;!&ndash;                <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>&ndash;&gt;-->
             </div>
 <!--&lt;!&ndash;            <div class="text-right">&ndash;&gt;-->
@@ -192,7 +193,7 @@
     </div>
 
     <div th:each="recipeImg : ${recipe.recipeImgDtoList}" class="text-center">
-        <img th:if="${not #strings.isEmpty(recipeImg.imgUrl)}" th:src="${recipeImg.imgUrl}" class="rounded mgb-15" width="800">
+        <img th:if="${not #strings.isEmpty(recipeImg.imgUrl)}" th:src="${recipeImg.imgUrl}" class="rounded mgb-15" width="400">
     </div>
 
 </div>
