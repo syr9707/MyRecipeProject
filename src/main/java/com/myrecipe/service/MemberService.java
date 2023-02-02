@@ -1,5 +1,6 @@
 package com.myrecipe.service;
 
+import com.myrecipe.dto.MemberFormDto;
 import com.myrecipe.entity.Member;
 import com.myrecipe.exception.AppException;
 import com.myrecipe.exception.ErrorCode;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberService implements UserDetailsService {
 
     public final MemberRepository memberRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     public Member saveMember(Member member) {
         validateDuplicateMember(member);
@@ -60,4 +64,34 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
+
+    // /////////////////////////////////////////////////////////////////////
+    /**
+     * 회원 정보 수정
+     * */
+    public Long updateMember(MemberFormDto memberFormDto) {
+        Member findMember = memberRepository.findByEmail(memberFormDto.getEmail());
+
+        if(findMember == null) {
+            throw new AppException(ErrorCode.MEMBER_ISEMPTY, "회원 정보를 찾을 수 없습니다.");
+        }
+
+        findMember.updateMember(memberFormDto, passwordEncoder);
+
+        return findMember.getId();
+    }
+    
+    /**
+     * 회원 정보 불러오기
+     * */
+    @Transactional(readOnly = true)
+    public MemberFormDto getMemberDetail(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다. id = " + memberId));
+
+        MemberFormDto memberFormDto = MemberFormDto.of(member);
+
+        return memberFormDto;
+    }
+    
 }
