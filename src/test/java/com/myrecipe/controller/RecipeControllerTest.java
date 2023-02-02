@@ -40,11 +40,11 @@ class RecipeControllerTest {
 
     @Test
     @DisplayName("레시피 등록 페이지 권한 테스트")
-    @WithMockUser(username = "admin", roles = "ADMIN")
+    @WithMockUser(username = "admin", roles = "ADMIN") // 회원 이름이 admin이고, role이 ADMIN인 유저가 로그인 상태로 테스트
     public void recipeFormTest() throws Exception{
-        mockMvc.perform(MockMvcRequestBuilders.get("/admin/recipe/new"))
-                .andDo(print())
-                .andExpect(status().isOk());
+        mockMvc.perform(MockMvcRequestBuilders.get("/admin/recipe/new")) // 게시물 등록 페이지 get 요청
+                .andDo(print()) // 요청과 응답 메시지 콘솔창 확인
+                .andExpect(status().isOk()); // 응답 상태 코드가 정상인지 확인
     }
 
     @Test

@@ -1,8 +1,10 @@
 package com.myrecipe.dto;
 
+import com.myrecipe.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
+import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -33,5 +35,12 @@ public class MemberFormDto {
 
     @NotEmpty(message = "주소는 필수 입력 값입니다.")
     private String address;
+
+    // Entity -> DTO
+    private static ModelMapper modelMapper = new ModelMapper(); // 엔티티 객체와 DTO 객체 간의 데이터를 복사하여 복사한 객체를 반환
+
+    public static MemberFormDto of(Member member) {
+        return modelMapper.map(member, MemberFormDto.class);
+    }
 
 }

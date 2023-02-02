@@ -18,7 +18,10 @@ public enum ErrorCode {
     RECIPEIMG_NULL(HttpStatus.NOT_FOUND, ""),
 
     // 레시피 중복 저장
-    CART_RECIPE_DUPLICATED(HttpStatus.CONFLICT, "");
+    CART_RECIPE_DUPLICATED(HttpStatus.CONFLICT, ""),
+
+    // 회원 정보 찾을 수 없는 경우
+    MEMBER_ISEMPTY(HttpStatus.NOT_FOUND, "");
 
     private HttpStatus httpStatus;
     private String message;
