@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -72,9 +73,11 @@ public class MemberController {
         try {
             MemberFormDto memberFormDto = memberService.getMemberDetail(memberId);
             model.addAttribute("memberFormDto", memberFormDto);
-        } catch (AppException e){
-            model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberFormUpdate";
+            model.addAttribute("memberId", memberId);
+        } catch (IllegalArgumentException e){
+            model.addAttribute("errorMessage", "존재하지 않는 회원 입니다.");
+            model.addAttribute("memberFormDto", new MemberFormDto());
+            return "member/memberForm";
         }
 
         return "member/memberFormUpdate";
@@ -83,18 +86,18 @@ public class MemberController {
 
     @PutMapping(value = "/update/{memberId}")
     public String update(@Valid MemberFormDto memberFormDto,
-                         BindingResult bindingResult, Model model, Principal principal) {
+                         BindingResult bindingResult, Model model, @PathVariable("memberId") Long memberId) {
 
         if(bindingResult.hasErrors()) {
             return "member/memberFormUpdate";
         }
 
         try {
-            memberService.updateMember(memberFormDto);
-//            model.addAttribute(memberId);
-        } catch (AppException e){
-            model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberFormUpdate";
+            memberService.updateMember(memberId, memberFormDto);
+//            model.addAttribute("memberId", memberId);
+        } catch (Exception e){
+            model.addAttribute("errorMessage", "회원정보 수정 중 에러가 발생했습니다.");
+            return "member/memberForm";
         }
 
         return "redirect:/";
