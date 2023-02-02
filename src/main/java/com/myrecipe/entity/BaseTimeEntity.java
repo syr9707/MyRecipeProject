@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @EntityListeners(value = {AuditingEntityListener.class}) // Auditing 적용
-@MappedSuperclass
+@MappedSuperclass // 부모클래스를 상속 받는 자식클래스에 매핑 정보만 제공함
 @Getter
 @Setter
 public abstract class BaseTimeEntity {
