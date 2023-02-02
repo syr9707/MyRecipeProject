@@ -45,10 +45,17 @@ public class Member extends BaseEntity {
 
     // /////////////////////////////////////////////////////////////////
     // 회원 정보 수정
-    public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+//    public void updateMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+//        this.name = memberFormDto.getName();
+//        this.email = memberFormDto.getEmail();
+//        this.password = passwordEncoder.encode(memberFormDto.getPassword());
+//        this.address = memberFormDto.getAddress();
+//    }
+
+    public void updateMember(MemberFormDto memberFormDto, String password) {
         this.name = memberFormDto.getName();
         this.email = memberFormDto.getEmail();
-        this.password = passwordEncoder.encode(memberFormDto.getPassword());
+        this.password = password;
         this.address = memberFormDto.getAddress();
     }
 

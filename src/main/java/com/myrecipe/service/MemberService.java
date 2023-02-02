@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 
 /**
  * UserDetailsService : 데이터베이스에서 회원 정보를 가져옴.
@@ -69,14 +71,19 @@ public class MemberService implements UserDetailsService {
     /**
      * 회원 정보 수정
      * */
-    public Long updateMember(MemberFormDto memberFormDto) {
-        Member findMember = memberRepository.findByEmail(memberFormDto.getEmail());
+    public Long updateMember(Long memberId, MemberFormDto memberFormDto) {
+//        Member findMember = memberRepository.findByEmail(memberFormDto.getEmail());
 
-        if(findMember == null) {
-            throw new AppException(ErrorCode.MEMBER_ISEMPTY, "회원 정보를 찾을 수 없습니다.");
-        }
+        Member findMember = memberRepository.findById(memberId)
+                .orElseThrow(EntityNotFoundException::new);
 
-        findMember.updateMember(memberFormDto, passwordEncoder);
+//        if(findMember == null) {
+//            throw new AppException(ErrorCode.MEMBER_ISEMPTY, "회원 정보를 찾을 수 없습니다.");
+//        }
+
+        String password = passwordEncoder.encode(findMember.getPassword());
+
+        findMember.updateMember(memberFormDto, password);
 
         return findMember.getId();
     }
