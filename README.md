@@ -341,7 +341,7 @@ public String insertVideo(@RequestParam HashMap<String, Object> param, HttpSessi
 private void validateDuplicateMember(Member member) {
     Member findMember = memberRepository.findByEmail(member.getEmail()); // 이메일로 찾은 회원을 Member에 담는다.
     if(findMember != null) { // 회원 정보가 존재하면
-				 // IllegalStateException 예외처리
+        // IllegalStateException 예외처리
         throw new IllegalStateException("이미 가입된 회원입니다.");
     }
 }
@@ -353,7 +353,7 @@ private void validateDuplicateMember(Member member) {
     Member findMember = memberRepository.findByEmail(member.getEmail()); // 이메일로 찾은 회원을 Member에 담는다.
     if(findMember != null) { // 회원 정보가 존재하면
         // AppException 예외처리
-				 // MEMBERNAME_DUPLICATED(HttpStatus.CONFLICT, "")
+        // MEMBERNAME_DUPLICATED(HttpStatus.CONFLICT, "")
         throw new AppException(ErrorCode.MEMBERNAME_DUPLICATED, findMember.getName() + "은 이미 있습니다.");
     }
 }
@@ -381,9 +381,9 @@ try {
 CartRecipe savedCartRecipe = cartRecipeRepository.findByCartIdAndRecipeId(cart.getId(), recipe.getId());
 
 // 레시피 중복 저장
-if(savedCartRecipe != null) { // 마이페이지에 게시물이 저장되어 있다면 
-	// AppException의 CART_RECIPE_DUPLICATED로 예외처리를 한다.
-  throw new AppException(ErrorCode.CART_RECIPE_DUPLICATED, recipe.getRecipeName() + "은 이미 저장되어있습니다.");
+if(savedCartRecipe != null) { // 마이페이지에 게시물이 저장되어 있다면
+    // AppException의 CART_RECIPE_DUPLICATED로 예외처리를 한다.
+    throw new AppException(ErrorCode.CART_RECIPE_DUPLICATED, recipe.getRecipeName() + "은 이미 저장되어있습니다.");
 }
 
 CartRecipe cartRecipe = CartRecipe.createCartRecipe(cart, recipe);
@@ -473,7 +473,7 @@ public String main(RecipeSearchDto recipeSearchDto, Optional<Integer> page, Mode
 
     Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
 
-		// 출력할 게시물 DTO를 Service에 전달한다.
+    // 출력할 게시물 DTO를 Service에 전달한다.
     Page<MainItemDto> recipes = recipeService.getMainRecipePage(recipeSearchDto, pageable);
 
     model.addAttribute("recipes", recipes);
