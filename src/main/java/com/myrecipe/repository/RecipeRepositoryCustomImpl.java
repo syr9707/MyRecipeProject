@@ -97,7 +97,7 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
 
     @Override
     public Page<MainItemDto> getMainRecipePage(RecipeSearchDto recipeSearchDto, Pageable pageable) {
-        QRecipe recipe = QRecipe.recipe;
+        QRecipe recipe = QRecipe.recipe; // Querydsl을 통해 쿼리를 생성하기 위해, 플러그인을 통해 자동으로 생성된 QRecipe 객체를 이용함.
         QRecipeImg recipeImg = QRecipeImg.recipeImg;
 
         List<MainItemDto> content = queryFactory
@@ -116,7 +116,7 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
                 .orderBy(recipe.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .fetch();
+                .fetch(); // JPAQuery 메소드 중 하나인 fetch를 이용해서 쿼리 결과를 리스트로 반환한다. fetch() 메소드 실행 시점에 쿼리문이 실행된다.
 
         long total = queryFactory
                 .select(Wildcard.count) // select count(*)

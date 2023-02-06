@@ -18,3 +18,4 @@ public interface RecipeRepositoryCustom {
     Page<MainItemDto> getMainRecipePage(RecipeSearchDto recipeSearchDto, Pageable pageable);
 
 }
+
