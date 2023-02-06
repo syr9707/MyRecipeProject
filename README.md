@@ -2,6 +2,7 @@
 
 > 나만의 레시피를 공유해봐요! 🥗
 
+**프로젝트에 대한 더 자세한 기록을 한 Notion 링크를 첨부하였습니다.**
 
 ## 📌 목차
 1. [개요](#-개요)
@@ -50,15 +51,15 @@
   * 중복 아이디 회원가입 불가능
 
 
-* 나만의 레시피(게시글) 등록
-    * 레시피(게시글) 등록 / 수정 / 삭제
+* 레시피(게시물) 등록
+    * 등록 / 수정 / 삭제 / 조회
     * 레시피(게시글) 이미지 등록
     * 회원이 아닐 시 레시피(게시글) 등록 불가
 
 
-* 공유된 레시피 저장
-  * 회원이 아닐 시 레시피(게시글) 저장 불가
-  * 레시피 중복 저장 불가능
+* 레시피(게시물) 저장
+  * 회원이 아닐 시 레시피(게시물) 저장 불가
+  * 레시피(게시물) 중복 저장 불가능
 
 
 ## ✏ 학습 내용 & 개선된 내용
@@ -108,61 +109,187 @@
 ### 1. JPA 적용하기
 > MyBatis를 사용했던 지난 프로젝트 → JPA 적용하기
 <details>
-<summary>[이전 상황] MyBais를 이용해 구현했던 검색 기능 코드, DB 쿼리만 날렸던 프로젝트</summary>
+<summary>[이전 상황] MyBais를 이용해 구현했던 회원정보 저장 & 회원정보 수정</summary>
 <div markdown="1">
 
-* Ex) 게시물 검색
-* [Controller]
-```java
-// 직업 검색
-@RequestMapping("/jobsearchtest")
-public String jobSearch(@RequestParam HashMap<String, Object> param, Model model) {
-    ArrayList<JobVO> jobList = jobService.jobSearch(param);
-    model.addAttribute("jobList", jobList);
+<details>
+<summary>Ex 1) 회원정보 저장</summary>
+<div markdown="1">
 
-    return "job/job_search_result";
+* SQL Mapper
+```xml
+<!-- 회원 가입 -->
+<insert id="insertMember" parameterType="com.jobdongsan.project.model.MemberVO">
+	INSERT INTO member (memId, memPw, memName, memEmail, memChildBirth, memHP, memZipcode, memAddress1, memAddress2)
+	VALUES (#{memId}, #{memPw}, #{memName}, #{memEmail}, #{memChildBirth}, #{memHP}, #{memZipcode}, #{memAddress1}, #{memAddress2})
+</insert>
+
+<!-- Oauth 회원 가입  -->
+<insert id="insertOauthMember" parameterType="com.jobdongsan.project.model.MemberVO">
+	INSERT INTO member (memId, memPw, memName, memEmail, profileImg, provider, providerId)
+	VALUES (#{memId}, #{memPw}, #{memName}, #{memEmail}, #{profileImg}, #{provider}, #{providerId})
+</insert>
+```
+
+* MemberDAO Interface
+```java
+public void insertMember(MemberVO vo); // 회원 가입
+public void insertOauthMember(MemberVO vo); // SNS 회원 가입
+```
+
+* MemberService
+```java
+// 회원 가입
+@Override
+public void insertMember(MemberVO vo) {
+	// 비밀번호 암호화 처리한 후 mapper에게 전달
+	String encodedPwd = pwdEncoder.encode(vo.getMemPw());
+	vo.setMemPw(encodedPwd);
+	
+	dao.insertMember(vo); // 회원정보 저장(INSERT) SQL Mapper
+}
+
+// SNS 회원 가입
+@Override
+public void insertOauthMember(MemberVO vo) {
+	dao.insertOauthMember(vo);
 }
 ```
 
-* [SQL Mapper]
-```xml
-<!-- 게시물 검색 -->
-<select id="jobSearch" parameterType="hashmap" resultMap="jobResult">
-	SELECT * FROM job WHERE
-	jobName LIKE CONCAT('%', #{keyword}, '%')
-</select>
-```
 </div>
 </details>
 
 <details>
-<summary>[이번 프로젝트 시] JPA를 이용해 구현한 검색 기능 코드</summary>
+<summary>Ex 2) 회원정보 수정</summary>
 <div markdown="1">
 
-* querydsl을 적용시켜 본 코드
+* SQL Mapper
+```xml
+<!-- 회원 정보 수정 -->
+<update id="updateMemberInfo" parameterType="com.jobdongsan.project.model.MemberVO">
+	UPDATE member SET memPw = #{memPw}, memName = #{memName}, memEmail = #{memEmail},
+	memChildBirth = #{memChildBirth}, memHP = #{memHP}, memZipcode = #{memZipcode}, memAddress1 = #{memAddress1},
+	memAddress2 = #{memAddress2}, profileImg = #{profileImg} WHERE memId = #{memId}
+</update>
+```
+
+* MemberDAO Interface
 ```java
-/**
- * 검색어가 null이 아니면, 게시물명에 해당 검색어가 포함되는 게시물을 조회하는 조건 반환
- *
- * BooleanExpression ; null 반환 시 자동으로 조건절에서 제거됨
- * 단, 모든 조건이 null인 경우 장애 발생
- * */
-private BooleanExpression recipeNameLike(String searchQuery) {
-    return StringUtils.isEmpty(searchQuery) ? null : QRecipe.recipe.recipeName.like("%" + searchQuery + "%");
+public void updateMemberInfo(MemberVO vo); // 회원 정보 수정
+```
+
+* MemberService
+```java
+@Override
+public void updateMemberInfo(MemberVO vo) {
+	String encodedPwd = pwdEncoder.encode(vo.getMemPw());
+	vo.setMemPw(encodedPwd);
+	
+	dao.updateMemberInfo(vo);
 }
 ```
+
+</div>
+</details>
+
+</div>
+</details>
+
+<details>
+<summary>[이번 프로젝트 시] JPA를 이용해 구현한 회원정보 저장 & 회원정보 수정</summary>
+<div markdown="1">
+
+<details>
+<summary>Ex 1) 회원정보 저장</summary>
+<div markdown="1">
+
+* MemberRepository
+```java
+public interface MemberRepository extends JpaRepository<Member, Long> {
+    // 이메일로 중복 검사
+    Member findByEmail(String email);
+}
+```
+
+* MemberService
+```java
+public Member saveMember(Member member) {
+    validateDuplicateMember(member); // 회원가입 중복 검사
+    return memberRepository.save(member); // 회원 정보 저장
+}
+
+/**
+ * 회원가입 중복 검사
+ * 이메일 중복 불가능
+ * */
+private void validateDuplicateMember(Member member) {
+    Member findMember = memberRepository.findByEmail(member.getEmail()); // 이메일로 찾은 회원을 Member에 담는다.
+    if(findMember != null) {
+        // 예외처리
+        throw new AppException(ErrorCode.MEMBERNAME_DUPLICATED, findMember.getName() + "은 이미 있습니다.");
+    }
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Ex 2) 회원정보 수정 : 원하는 정보만 선택해 수정</summary>
+<div markdown="1">
+
+* Member Entity
+```java
+public void updateMember(MemberFormDto memberFormDto, String password) {
+    this.name = memberFormDto.getName();
+    this.password = password;
+    this.address = memberFormDto.getAddress();
+}
+```
+
+* MemberService
+```java
+public Long updateMember(Long memberId, MemberFormDto memberFormDto) {
+
+    Member findMember = memberRepository.findById(memberId)
+            .orElseThrow(EntityNotFoundException::new);
+
+    String password = passwordEncoder.encode(findMember.getPassword());
+
+    findMember.updateMember(memberFormDto, password);
+
+    return findMember.getId();
+}
+```
+
+</div>
+</details>
+
+</div>
+</details>
+
+<details>
+<summary>느낀점</summary>
+<div markdown="1">
+
+- JPA 덕분에 SQL에 의존적인 코드를 짜지 않고, Java 중심의 코드를 짤 수 있었다.
+- SQL Mapper로 구현했을 때처럼 자주 쓰는 CRUD 메소드를 직접 다 작성하지 않아도 돼 코드의 양이 줄었다.
+- JPA는 기본적인 CRUD를 제공해 비즈니스 로직에 보다 더 집중할 수 있다.
+- 검색 기능에 한해 아직까지는 Querydsl보다 myBatis가 직관적이어서 그런지 더 이해가 쉽다.
+- Querydsl의 더 깊은 이해와 학습이 필요하다.
+
 </div>
 </details>
 
 <br>
 
-### 2. Custom Exception 적용하기
+### 2. Exception과 Custom Exception 적용하기
 > 예외 처리를 전혀 하지 않았던 지난 프로젝트 → 예외 처리 적용
 <details>
 <summary>[이전 상황] 예외 처리를 전혀 하지 않았던 지난 프로젝트들</summary>
 <div markdown="1">
 
-  * Ex) 마이페이지에 게시물 저장 시, 중복 저장 처리
+* Ex) 마이페이지에 게시물 저장 시, 중복 저장 처리
 ```java
 // 마이페이지 게시물 저장
 @ResponseBody
@@ -186,6 +313,18 @@ public String insertVideo(@RequestParam HashMap<String, Object> param, HttpSessi
 	return result;
 }
 ```
+
+* SQL Mapper : 마이페이지에 동일 게시물이 존재하는지 확인
+```xml
+<!-- 마이페이지에 동일 게시물이 존재하는지 확인 -->
+<!-- 회원의 마이페이지에 저장하고자 하는 게시물의 개수 카운트 -->
+<select id="checkVideo" parameterType="hashmap" resultType="int">
+	SELECT COUNT(*)
+	FROM my_history 
+	WHERE videoNo=#{videoNo} AND memId=#{memId} 
+</select>
+```
+
 </div>
 </details>
 
@@ -193,7 +332,41 @@ public String insertVideo(@RequestParam HashMap<String, Object> param, HttpSessi
 <summary>[이번 프로젝트 시] 예외 처리를 적용해보았던 이번 프로젝트</summary>
 <div markdown="1">
 
-* Ex) 마이페이지에 게시물 저장 시, 중복 저장 처리 : 마이페이지 컨트롤러
+<details>
+<summary>Ex 1) 회원 가입 중복 검사</summary>
+<div markdown="1">
+
+* 단계 1 : throw new IllegalStateException
+```java
+private void validateDuplicateMember(Member member) {
+    Member findMember = memberRepository.findByEmail(member.getEmail()); // 이메일로 찾은 회원을 Member에 담는다.
+    if(findMember != null) { // 회원 정보가 존재하면
+				 // IllegalStateException 예외처리
+        throw new IllegalStateException("이미 가입된 회원입니다.");
+    }
+}
+```
+
+* 단계 2 : custom한 AppException으로 처리
+```java
+private void validateDuplicateMember(Member member) {
+    Member findMember = memberRepository.findByEmail(member.getEmail()); // 이메일로 찾은 회원을 Member에 담는다.
+    if(findMember != null) { // 회원 정보가 존재하면
+        // AppException 예외처리
+				 // MEMBERNAME_DUPLICATED(HttpStatus.CONFLICT, "")
+        throw new AppException(ErrorCode.MEMBERNAME_DUPLICATED, findMember.getName() + "은 이미 있습니다.");
+    }
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>Ex 2) 마이페이지에 게시물 저장 시, 중복 저장 처리</summary>
+<div markdown="1">
+
+* CartController : 마이페이지 컨트롤러
 ```java
 try {
     cartRecipeId = cartService.addCart(cartRecipeDto, email);
@@ -203,7 +376,7 @@ try {
 }
 ```
 
-* Service
+* CartService
 ```java
 CartRecipe savedCartRecipe = cartRecipeRepository.findByCartIdAndRecipeId(cart.getId(), recipe.getId());
 
@@ -216,6 +389,21 @@ if(savedCartRecipe != null) { // 마이페이지에 게시물이 저장되어 �
 CartRecipe cartRecipe = CartRecipe.createCartRecipe(cart, recipe);
 cartRecipeRepository.save(cartRecipe);
 ```
+
+</div>
+</details>
+
+</div>
+</details>
+
+<details>
+<summary>느낀점</summary>
+<div markdown="1">
+
+- Custom Exception의 Test Code 실패로 다시 원래 코드로 돌아간 것들이 있어 아쉽다.
+- 오류 없이 예외 처리를 할 수 있는 방법을 배우고 싶다.
+- 내가 구현한 Custom Exception이 맞는 방식인지 모르겠다. 제대로 배우고 싶다.
+
 </div>
 </details>
 
@@ -262,6 +450,11 @@ public class MainItemDto {
     private String imgUrl;
     private Integer price;
 
+   /**
+   * @QueryProjection : Querydsl로 결과 조회 시, MainItemDto 객체로 바로 받아옴
+   * - DTO 클래스로 변환하는 과정 없이 바로 DTO 객체를 뽑아냄
+   * - DTO 기반으로 생성된 QDTO 객체의 생성자를 사용하는 것
+   * */
     @QueryProjection
     public MainItemDto(Long id, String recipeName, String recipeDetail, String imgUrl, Integer price) {
         this.id = id;
@@ -272,6 +465,37 @@ public class MainItemDto {
     }
 }
 ```
+
+* MainController
+```java
+@GetMapping(value = "/")
+public String main(RecipeSearchDto recipeSearchDto, Optional<Integer> page, Model model){
+
+    Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 6);
+
+		// 출력할 게시물 DTO를 Service에 전달한다.
+    Page<MainItemDto> recipes = recipeService.getMainRecipePage(recipeSearchDto, pageable);
+
+    model.addAttribute("recipes", recipes);
+    model.addAttribute("recipeSearchDto", recipeSearchDto);
+    model.addAttribute("maxPage", 5);
+
+    return "main";
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary>느낀점</summary>
+<div markdown="1">
+
+- DTO가 없을수록 구조가 단순하고 직관적이어서 이해가 쉬웠다.
+- 하지만 DTO가 많아질수록 구조가 복잡해지고 DTO와 Entity 사이의 변환, DTO와 Service의 교류 등이 이해하기 어려워졌다.
+- 따라서 RequestDTO와 ResponseDTO로 더 세분화해서 나누려면, DTO의 더 깊은 이해가 필요하다.
+- 객체 지향 설계 역시 더 제대로 된 이해와 적용이 필요하다.
+
 </div>
 </details>
 
@@ -308,7 +532,7 @@ public class MainItemDto {
 <summary>[이번 프로젝트 시] 코드에 좀 더 집중하기 위해 Test Code를 적용</summary>
 <div markdown="1">
 
-* Ex) 중복 회원 가입 테스트
+* Ex 1) 중복 회원 가입 테스트
 ```java
 // 임의의 회원 정보 생성
 public Member createMember() {
@@ -334,6 +558,40 @@ public void saveDuplicateMemberTest(){
     assertEquals("김길동은 이미 있습니다.", e.getMessage());
 }
 ```
+
+* Ex 2) 마이페이지 중복 게시물 저장 테스트
+```java
+@Test
+@DisplayName("마이페이지 중복 레시피 저장 테스트")
+public void saveDuplicateCartTest() {
+    Recipe recipe = saveRecipe();
+    Member member = saveMember();
+
+    CartRecipeDto cartRecipeDto = new CartRecipeDto();
+    cartRecipeDto.setRecipeId(recipe.getId());
+
+    Long cartRecipeId = cartService.addCart(cartRecipeDto, member.getEmail());
+    CartRecipe cartRecipe = cartRecipeRepository.findById(cartRecipeId)
+            .orElseThrow(EntityNotFoundException::new);
+
+		// 동일한 게시물을 한번 더 저장한다.
+    // 발생시킨 예외처리 메세지와 일치하는지 확인한다.
+    Throwable e = assertThrows(AppException.class, () -> {
+        cartService.addCart(cartRecipeDto, member.getEmail());});
+    assertEquals(recipe.getRecipeName() + "은 이미 저장되어있습니다.", e.getMessage());
+}
+```
+</div>
+</details>
+
+<details>
+<summary>느낀점</summary>
+<div markdown="1">
+
+- Test Code는 신세계였다. View가 없어도 코드가 맞는지 확인할 수 있다니...
+- 하지만 내가 짠 Test Code의 오류로 맞게 코드를 짰지만 테스트코드가 실패한다던지, 틀린 코드를 짰지만 테스트코드가 성공한다던지... 이런 현상들이 반복돼서 아직까지는 View의 최종 확인을 받는다.
+- Test Code에 대한 더 깊은 이해와 학습을 통해 구현하고자 하는 기능의 테스트코드를 작성하고, 그를 통한 프로젝트 진행 방식을 적용시켜보고 싶다.
+
 </div>
 </details>
 
@@ -341,4 +599,9 @@ public void saveDuplicateMemberTest(){
 <br>
 <br>
 
+---
 
+<br>
+<br>
+
+더 자세한 내용은 Notion에 있습니다.
