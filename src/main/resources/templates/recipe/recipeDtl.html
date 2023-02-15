@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/layout1}">
 
 <head>
@@ -178,6 +179,14 @@
                 <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">마이페이지 저장</button>
 <!--&lt;!&ndash;                <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>&ndash;&gt;-->
             </div>
+            <div class="text-right" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                <button type="button" class="btn btn-light border border-primary btn-lg"
+                        th:onclick="'location.href=\'/admin/recipe/'+ @{${recipe.id}}+ '\''">레시피 수정</button>
+            </div>
+            <!--                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">-->
+            <!--                    <a class="nav-link" href="/admin/recipes">레시피 관리</a>-->
+            <!--                </li>-->
+
 <!--&lt;!&ndash;            <div class="text-right">&ndash;&gt;-->
 <!--&lt;!&ndash;                <button type="button" class="btn btn-danger btn-lg">품절</button>&ndash;&gt;-->
 <!--&lt;!&ndash;            </div>&ndash;&gt;-->
