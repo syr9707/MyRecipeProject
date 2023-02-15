@@ -2,7 +2,9 @@
 
 > 나만의 레시피를 공유해봐요! 🥗
 
-**프로젝트에 대한 더 자세한 기록을 한 Notion 링크를 첨부하였습니다.**
+<br>
+
+**💡 프로젝트에 대한 더 자세한 내용은 첨부한 Notion에 있습니다.**
 
 ## 📌 목차
 1. [개요](#-개요)
@@ -108,6 +110,21 @@
 
 ### 1. JPA 적용하기
 > MyBatis를 사용했던 지난 프로젝트 → JPA 적용하기
+
+```text
+🤔 MyBatis를 배울 땐, 당연히 그 기술만 쓰는 것인 줄 알았습니다.
+
+하지만 후에, JPA를 많이 사용한다는 것을 알게 되고
+개인적으로 학습 후 적용시켰습니다.
+
+시작할 땐 JPA의 개념이 MyBatis처럼 SQL 쿼리에 객체를 Mapping만 하는
+단순 작업인 줄 알았습니다.
+
+하지만 학습하다보니,
+💡 'JPA는 Java의 OOP의 개념을 제대로 알고 활용할 줄 알아야 하는 등
+제대로 익히기가 매우 까다롭고 어렵다'는 사실을 알게 되었습니다.
+```
+
 <details>
 <summary>[이전 상황] MyBais를 이용해 구현했던 회원정보 저장 & 회원정보 수정</summary>
 <div markdown="1">
@@ -285,6 +302,19 @@ public Long updateMember(Long memberId, MemberFormDto memberFormDto) {
 
 ### 2. Exception과 Custom Exception 적용하기
 > 예외 처리를 전혀 하지 않았던 지난 프로젝트 → 예외 처리 적용
+
+```text
+🤔 회원 가입과 로그인 기능은 간단한 줄 알았습니다.
+
+하지만 회원 가입과 로그인 뿐 아니라 '서비스를 이용하는 모든 과정'에선, 
+여러가지 상황들과 오류들이 발생할 수 있다는 것을 알게 되었습니다.
+
+따라서 발생할 수 있는 여러 예외 상황들에 대한 것들을 고민해보게 되었습니다.
+
+💡 그 과정에선 '예외를 처리하는 방법은 여러가지'이고, 
+'예외 처리를 custom하여 처리할 수 있다는 것'도 알게 되었습니다.
+```
+
 <details>
 <summary>[이전 상황] 예외 처리를 전혀 하지 않았던 지난 프로젝트들</summary>
 <div markdown="1">
@@ -411,6 +441,16 @@ cartRecipeRepository.save(cartRecipe);
 
 ### 3. DTO 적용하기
 > DTO의 존재를 몰라 Entity를 그대로 반환 → DTO 적용
+
+```text
+🤔 엔티티를 직접 반환했던 이전 프로젝트들과 달리, 
+별도의 DTO를 만들어 반환하였습니다.
+
+실무를 경험해본 적이 없어 와닿지 않는 부분이었습니다.
+하지만 성능 문제를 야기할 수 있는 것들에 대해 공부해보았고, 
+💡 그 중 '엔티티를 웹에 노출해서는 안 된다는 것'을 알게 되었습니다.
+```
+
 <details>
 <summary>[이전 상황] DTO의 존재를 몰랐던 지난 프로젝트들</summary>
 <div markdown="1">
@@ -503,6 +543,19 @@ public String main(RecipeSearchDto recipeSearchDto, Optional<Integer> page, Mode
 
 ### 4. Test Code 작성하기
 > 매번 View Page를 통해 의도한 결과가 맞는지 확인 → Test Code 적용
+
+```text
+🤔 이전 프로젝트들에선 
+Test Code를 작성하지 않고, 작성한 코드가 정상적으로 돌아가는지 
+매번 View Page에서 확인을 했었습니다.
+
+Test Code를 작성함으로써 코드의 추가 또는 변경이 있을 경우 
+문제를 빠르게 파악하여 개발의 유지보수성을 증진시킬 수 있다는 것을 알게되었습니다.
+
+따라서 이번 프로젝트를 통해 
+💡 'Test Code를 작성했고, 후에 View Page 코드를 완성'했습니다.
+```
+
 <details>
 <summary>[이전 상황] Test Code의 존재 자체를 몰랐던 지난 프로젝트들</summary>
 <div markdown="1">
