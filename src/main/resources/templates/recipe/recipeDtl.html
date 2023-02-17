@@ -158,6 +158,18 @@
 
             <div class="text-right">
                 <div class="h4 text-left">
+                    <input type="hidden" th:value="${recipe.view}" id="view" name="view">
+                    조회수<br>
+                    <span th:text="${recipe.view}"></span>
+                </div>
+            </div>
+            <hr class="my-4">
+
+<!--            <div class="h4" th:text="${recipe.recipeName}"></div>-->
+<!--            <hr class="my-4">-->
+
+            <div class="text-right">
+                <div class="h4 text-left">
                     <input type="hidden" th:value="${recipe.price}" id="price" name="price">
                     레시피 예상 가격<br>
                     <span th:text="${recipe.price}"></span>원

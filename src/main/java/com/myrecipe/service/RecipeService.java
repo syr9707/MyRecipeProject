@@ -107,4 +107,10 @@ public class RecipeService {
         return recipeRepository.getMainRecipePage(recipeSearchDto, pageable);
     }
 
+    // 조회수 카운팅
+    @Transactional
+    public int updateView(Long id) {
+        return recipeRepository.updateView(id);
+    }
+
 }

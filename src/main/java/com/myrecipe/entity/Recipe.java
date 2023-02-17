@@ -36,6 +36,10 @@ public class Recipe extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RecipeLevel recipeLevel; // 요리 난이도
 
+    // 조회수 업데이트
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int view;
+
     public void updateRecipe(RecipeFormDto recipeFormDto) {
         this.recipeName = recipeFormDto.getRecipeName();
         this.price = recipeFormDto.getPrice();

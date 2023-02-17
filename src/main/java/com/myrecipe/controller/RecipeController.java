@@ -94,6 +94,7 @@ public class RecipeController {
     @GetMapping(value = "/recipe/{recipeId}")
     public String recipeDtl(Model model, @PathVariable("recipeId") Long recipeId) {
         RecipeFormDto recipeFormDto = recipeService.getRecipeDtl(recipeId);
+        recipeService.updateView(recipeId); // views ++
         model.addAttribute("recipe", recipeFormDto);
         return "recipe/recipeDtl";
     }

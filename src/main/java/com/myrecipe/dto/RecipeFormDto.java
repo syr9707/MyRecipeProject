@@ -34,6 +34,8 @@ public class RecipeFormDto {
 
     private RecipeLevel recipeLevel;
 
+    private int view;
+
     private List<RecipeImgDto> recipeImgDtoList = new ArrayList<>(); // 레시피 저장 후 수정할 때 레시피 이미지 정보를 저장하는 리스트
 
     private List<Long> recipeImgIds = new ArrayList<>(); // 레시피 이미지 아이디 저장 리스트

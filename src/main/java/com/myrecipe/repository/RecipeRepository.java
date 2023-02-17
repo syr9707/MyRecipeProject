@@ -2,6 +2,7 @@ package com.myrecipe.repository;
 
 import com.myrecipe.entity.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
@@ -28,5 +29,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long>, QuerydslP
      * */
     @Query("select r from Recipe r where r.recipeDetail like %:recipeDetail% order by r.price desc")
     List<Recipe> findByRecipeDetail(@Param("recipeDetail") String recipeDetail);
+
+
+    // 조회수 카운팅
+    @Modifying
+    @Query("update Recipe r set r.view = r.view + 1 where r.id = :id")
+    int updateView(Long id);
 
 }
