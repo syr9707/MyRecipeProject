@@ -1,9 +1,11 @@
-package com.myrecipe.service;
+package com.myrecipe.service.comment;
 
 import com.myrecipe.dto.CommentRequestDto;
 import com.myrecipe.entity.Comment;
 import com.myrecipe.entity.Member;
 import com.myrecipe.entity.Recipe;
+import com.myrecipe.exception.member.MemberException;
+import com.myrecipe.exception.member.MemberExceptionType;
 import com.myrecipe.repository.CommentRepository;
 import com.myrecipe.repository.MemberRepository;
 import com.myrecipe.repository.RecipeRepository;

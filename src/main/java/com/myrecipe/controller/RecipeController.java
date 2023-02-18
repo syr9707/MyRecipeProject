@@ -1,10 +1,7 @@
 package com.myrecipe.controller;
 
-import com.myrecipe.dto.CommentResponseDto;
 import com.myrecipe.dto.RecipeFormDto;
-import com.myrecipe.exception.AppException;
-import com.myrecipe.exception.ErrorCode;
-import com.myrecipe.service.RecipeService;
+import com.myrecipe.service.recipe.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor

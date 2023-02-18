@@ -1,4 +1,4 @@
-package com.myrecipe.service;
+package com.myrecipe.service.recipe;
 
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.myrecipe.controller;
 
 import com.myrecipe.dto.CommentRequestDto;
-import com.myrecipe.service.CommentService;
+import com.myrecipe.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

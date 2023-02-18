@@ -1,4 +1,4 @@
-package com.myrecipe.service;
+package com.myrecipe.service.recipe;
 
 import com.myrecipe.dto.MainItemDto;
 import com.myrecipe.dto.RecipeFormDto;
@@ -6,10 +6,9 @@ import com.myrecipe.dto.RecipeImgDto;
 import com.myrecipe.dto.RecipeSearchDto;
 import com.myrecipe.entity.Recipe;
 import com.myrecipe.entity.RecipeImg;
-import com.myrecipe.exception.AppException;
-import com.myrecipe.exception.ErrorCode;
 import com.myrecipe.repository.RecipeImgRepository;
 import com.myrecipe.repository.RecipeRepository;
+import com.myrecipe.service.recipe.RecipeImgService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

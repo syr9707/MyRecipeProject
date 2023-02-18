@@ -2,7 +2,7 @@ package com.myrecipe.controller;
 
 import com.myrecipe.dto.MainItemDto;
 import com.myrecipe.dto.RecipeSearchDto;
-import com.myrecipe.service.RecipeService;
+import com.myrecipe.service.recipe.RecipeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

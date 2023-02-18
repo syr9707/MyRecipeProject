@@ -1,7 +1,8 @@
-package com.myrecipe.service;
+package com.myrecipe.service.recipe;
 
 import com.myrecipe.entity.RecipeImg;
 import com.myrecipe.repository.RecipeImgRepository;
+import com.myrecipe.service.recipe.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
