@@ -107,7 +107,8 @@ public class RecipeRepositoryCustomImpl implements RecipeRepositoryCustom{
                                 recipe.recipeName,
                                 recipe.recipeDetail,
                                 recipeImg.imgUrl,
-                                recipe.price)
+                                recipe.price,
+                                recipe.view)
                 )
                 .from(recipeImg)
                 .join(recipeImg.recipe, recipe) // RecipeImg와 Recipe를 내부 조인

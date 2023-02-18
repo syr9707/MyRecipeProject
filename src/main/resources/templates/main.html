@@ -55,8 +55,17 @@
                         <img th:src="${recipe.imgUrl}" class="card-img-top" th:alt="${recipe.recipeName}" height="200">
                         <div class="card-body">
                             <h4 class="card-title">[[${recipe.recipeName}]]</h4>
-                            <p class="card-title text-danger">[[${recipe.recipeDetail}]]</p>
+<!--                            <p class="card-title text-danger">[[${recipe.recipeDetail}]]</p>-->
+                            <p class="card-title text-danger">[[${#strings.substring(recipe.recipeDetail, 0, 10)}]]</p>
                             <h3 class="card-text">[[${recipe.price}]]원</h3>
+                        </div>
+                        <hr class="my-4">
+                        <div class="text-right">
+                            <div class="h4 text-left">
+                                <input type="hidden" th:value="${recipe.view}" id="view" name="view">
+                                조회수
+                                <span th:text="${recipe.view}"></span>
+                            </div>
                         </div>
                     </a>
                 </div>

@@ -113,4 +113,13 @@ public class RecipeService {
         return recipeRepository.updateView(id);
     }
 
+    // 조회수 출력
+    @Transactional(readOnly = true)
+    public int printView(Long id) {
+        Recipe recipe = recipeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        return recipe.getView();
+    }
+
 }
