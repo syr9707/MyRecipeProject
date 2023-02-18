@@ -14,7 +14,7 @@
 5. [구현 기능](#-구현-기능)
 6. [학습 내용 & 개선된 내용](#-학습-내용--개선된-내용)
 
-
+<br>
 
 ## ✔ 개요
 * 개발 기간
@@ -22,6 +22,7 @@
 * 개발 인원
   * 개인 프로젝트
 
+<br>
 
 ## ✔ 사용 언어 및 개발 환경
 - IntelliJ
@@ -32,38 +33,45 @@
 - MySQL
 - Thymeleaf
 
+<br>
 
 ## ✔ 프로젝트 목적
-* 국비 교욱에서 배운 MyBatis가 아닌, 후에 개인적으로 공부한 
+* 국비 교육에서 배운 MyBatis가 아닌, 후에 개인적으로 공부한 
   * **JPA** 적용
   * **Custom Exception** 적용
   * **DTO** 적용
   * **Test Code** 작성
   
-  프로젝트
+프로젝트
+
+<br>
 
 ## ✔ DB 구조
 ![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fabfbe87-79bc-4ba8-8906-2b569277681f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230130%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230130T042206Z&X-Amz-Expires=86400&X-Amz-Signature=3c801411256bf5de2d5a1e7c6221c597c5cf9b50ec59851446d241c3d99b0af7&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
 
-
+<br>
 
 ## ✔ 구현 기능
-* Spring-Security를 활용한 회원가입
-  * 비밀번호 암호화 저장
-  * 중복 아이디 회원가입 불가능
+1. Spring-Security를 활용한 회원가입 
+   * 비밀번호 암호화 저장 
+   * 중복 아이디 회원가입 불가능
 
 
-* 레시피(게시물) 등록
-    * 조회수 측정
-    * 등록 / 삭제 / 조회 / 수정(ADMIN 권한이 없을 시 비활성)
-    * 레시피(게시글) 이미지 등록
-    * 회원이 아닐 시 레시피(게시글) 등록 불가
+2. 레시피(게시물) 등록 
+   * 조회수 측정
+   * 등록 / 삭제 / 조회 / 수정(ADMIN 권한이 없을 시 비활성)
+   * 게시글 등록자만 수정 가능
+   * 회원이 아닐 시 게시글 등록 불가
 
 
-* 레시피(게시물) 저장
-  * 회원이 아닐 시 레시피(게시물) 저장 불가
-  * 레시피(게시물) 중복 저장 불가능
+3. 게시글 이미지 등록
 
+
+4. 레시피(게시물) 저장
+   * 회원이 아닐 시 레시피(게시물) 저장 불가
+   * 레시피(게시물) 중복 저장 불가능
+
+<br>
 
 ## ✏ 학습 내용 & 개선된 내용
 ### 0. 프로젝트 목적 변경
