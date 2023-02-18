@@ -3,7 +3,8 @@ package com.myrecipe.controller;
 import com.myrecipe.dto.CartDetailDto;
 import com.myrecipe.dto.CartRecipeDto;
 import com.myrecipe.exception.AppException;
-import com.myrecipe.service.CartService;
+import com.myrecipe.exception.cart.CartException;
+import com.myrecipe.service.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,15 +46,16 @@ public class CartController {
 
 //        try {
 //            cartRecipeId = cartService.addCart(cartRecipeDto, email);
-//        } catch (Exception e) {
+//        } catch (AppException e) {
+//            model.addAttribute("errorMessage", e.getMessage());
 //            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 //        }
 
         try {
             cartRecipeId = cartService.addCart(cartRecipeDto, email);
-        } catch (AppException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (CartException e) {
+            model.addAttribute("errorMessage", e.getExceptionType().getErrorMessage());
+            return new ResponseEntity<String>(e.getExceptionType().getErrorMessage(), HttpStatus.CONFLICT);
         }
 
         return new ResponseEntity<Long>(cartRecipeId, HttpStatus.OK);

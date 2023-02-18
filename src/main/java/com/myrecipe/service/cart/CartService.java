@@ -1,4 +1,4 @@
-package com.myrecipe.service;
+package com.myrecipe.service.cart;
 
 import com.myrecipe.dto.CartDetailDto;
 import com.myrecipe.dto.CartRecipeDto;
@@ -8,6 +8,10 @@ import com.myrecipe.entity.Member;
 import com.myrecipe.entity.Recipe;
 import com.myrecipe.exception.AppException;
 import com.myrecipe.exception.ErrorCode;
+import com.myrecipe.exception.cart.CartException;
+import com.myrecipe.exception.cart.CartExceptionType;
+import com.myrecipe.exception.member.MemberException;
+import com.myrecipe.exception.member.MemberExceptionType;
 import com.myrecipe.repository.CartRecipeRepository;
 import com.myrecipe.repository.CartRepository;
 import com.myrecipe.repository.MemberRepository;
@@ -41,17 +45,11 @@ public class CartService {
             cartRepository.save(cart);
         }
 
-//        // 레시피 중복 저장
-//        CartRecipe findCartRecipe = cartRecipeRepository.findByCartIdAndRecipeId(cart.getId(), recipe.getId());
-//        if(findCartRecipe != null) {
-//            throw new AppException(ErrorCode.CART_RECIPE_DUPLICATED, recipe.getRecipeName() + "은 이미 저장되어있습니다.");
-//        }
-
         CartRecipe savedCartRecipe = cartRecipeRepository.findByCartIdAndRecipeId(cart.getId(), recipe.getId());
 
         // 레시피 중복 저장
         if(savedCartRecipe != null) {
-            throw new AppException(ErrorCode.CART_RECIPE_DUPLICATED, recipe.getRecipeName() + "은 이미 저장되어있습니다.");
+            throw new CartException(CartExceptionType.ALREADY_EXIST_CART);
         }
 
         CartRecipe cartRecipe = CartRecipe.createCartRecipe(cart, recipe);
