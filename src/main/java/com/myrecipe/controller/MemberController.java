@@ -3,19 +3,18 @@ package com.myrecipe.controller;
 import com.myrecipe.dto.MemberFormDto;
 import com.myrecipe.entity.Member;
 import com.myrecipe.exception.AppException;
+import com.myrecipe.exception.member.MemberException;
+import com.myrecipe.exception.member.MemberExceptionType;
 import com.myrecipe.repository.MemberRepository;
-import com.myrecipe.service.MemberService;
+import com.myrecipe.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.GeneratorType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @RequestMapping("/members")
 @RequiredArgsConstructor
@@ -43,8 +42,8 @@ public class MemberController {
         try {
             Member member = Member.createMember(memberFormDto, passwordEncoder);
             memberService.saveMember(member);
-        } catch (AppException e){
-            model.addAttribute("errorMessage", e.getMessage());
+        } catch (MemberException e){
+            model.addAttribute("errorMessage", e.getExceptionType().getErrorMessage());
             return "member/memberForm";
         }
 
@@ -66,16 +65,13 @@ public class MemberController {
 
     @GetMapping(value = "/update/{memberId}")
     public String memberUpdateForm(@PathVariable("memberId") Long memberId, Model model) {
-//        memberId = Long.parseLong(principal.getName());
-
-//        memberFormDto = memberRepository.findByEmail(memberId);
 
         try {
             MemberFormDto memberFormDto = memberService.getMemberDetail(memberId);
             model.addAttribute("memberFormDto", memberFormDto);
             model.addAttribute("memberId", memberId);
-        } catch (IllegalArgumentException e){
-            model.addAttribute("errorMessage", "존재하지 않는 회원 입니다.");
+        } catch (MemberException e){
+            model.addAttribute("errorMessage", e.getExceptionType().getErrorMessage());
             model.addAttribute("memberFormDto", new MemberFormDto());
             return "member/memberForm";
         }

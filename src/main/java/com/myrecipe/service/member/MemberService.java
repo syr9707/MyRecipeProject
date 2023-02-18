@@ -1,9 +1,11 @@
-package com.myrecipe.service;
+package com.myrecipe.service.member;
 
 import com.myrecipe.dto.MemberFormDto;
 import com.myrecipe.entity.Member;
 import com.myrecipe.exception.AppException;
 import com.myrecipe.exception.ErrorCode;
+import com.myrecipe.exception.member.MemberException;
+import com.myrecipe.exception.member.MemberExceptionType;
 import com.myrecipe.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
@@ -41,10 +43,9 @@ public class MemberService implements UserDetailsService {
      * */
     private void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByEmail(member.getEmail()); // 이메일로 찾은 회원을 Member에 담는다.
+
         if(findMember != null) {
-//            throw new IllegalStateException("이미 가입된 회원입니다.");
-            // 예외처리
-            throw new AppException(ErrorCode.MEMBERNAME_DUPLICATED, findMember.getName() + "은 이미 있습니다.");
+            throw new MemberException(MemberExceptionType.ALREADY_EXIST_USERNAME);
         }
     }
 
@@ -55,10 +56,6 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email);
-
-        if(member == null){
-            throw new UsernameNotFoundException(email);
-        }
 
         return User.builder()
                 .username(member.getEmail())
@@ -72,14 +69,13 @@ public class MemberService implements UserDetailsService {
      * 회원 정보 수정
      * */
     public Long updateMember(Long memberId, MemberFormDto memberFormDto) {
-//        Member findMember = memberRepository.findByEmail(memberFormDto.getEmail());
 
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow(EntityNotFoundException::new);
 
-//        if(findMember == null) {
-//            throw new AppException(ErrorCode.MEMBER_ISEMPTY, "회원 정보를 찾을 수 없습니다.");
-//        }
+        if(findMember != null) {
+            throw new MemberException(MemberExceptionType.ALREADY_EXIST_USERNAME);
+        }
 
         String password = passwordEncoder.encode(findMember.getPassword());
 
@@ -93,8 +89,9 @@ public class MemberService implements UserDetailsService {
      * */
     @Transactional(readOnly = true)
     public MemberFormDto getMemberDetail(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다. id = " + memberId));
+        Member member = memberRepository.findById(memberId).orElseThrow(
+                () -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER)
+        );
 
         MemberFormDto memberFormDto = MemberFormDto.of(member);
 
