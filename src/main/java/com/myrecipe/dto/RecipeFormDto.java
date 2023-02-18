@@ -1,6 +1,7 @@
 package com.myrecipe.dto;
 
 import com.myrecipe.constant.RecipeLevel;
+import com.myrecipe.entity.Member;
 import com.myrecipe.entity.Recipe;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 레시피 데이터 정보를 전달하는 DTO
@@ -29,12 +31,15 @@ public class RecipeFormDto {
     @NotBlank(message = "레시피 상세는 필수 입력 값입니다.")
     private String recipeDetail;
 
-//    @NotNull(message = "재고는 필수 입력 값입니다.")
-//    private Integer stockNumber;
-
     private RecipeLevel recipeLevel;
 
     private int view;
+
+    // 작성자 정보 저장 : createBy
+    private String username;
+
+    // 댓글 관련 정보들
+    private List<CommentResponseDto> comments;
 
     private List<RecipeImgDto> recipeImgDtoList = new ArrayList<>(); // 레시피 저장 후 수정할 때 레시피 이미지 정보를 저장하는 리스트
 

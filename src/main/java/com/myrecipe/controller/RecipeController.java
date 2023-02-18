@@ -1,5 +1,6 @@
 package com.myrecipe.controller;
 
+import com.myrecipe.dto.CommentResponseDto;
 import com.myrecipe.dto.RecipeFormDto;
 import com.myrecipe.exception.AppException;
 import com.myrecipe.exception.ErrorCode;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -91,11 +93,27 @@ public class RecipeController {
         return "redirect:/";
     }
 
+    // 게시물 상세보기
     @GetMapping(value = "/recipe/{recipeId}")
     public String recipeDtl(Model model, @PathVariable("recipeId") Long recipeId) {
         RecipeFormDto recipeFormDto = recipeService.getRecipeDtl(recipeId);
+
+        /* 댓글 관련 */
+//        List<CommentResponseDto> comments = recipeFormDto.getComments();
+//
+//        if(comments != null && comments.isEmpty()) {
+//            model.addAttribute("comments", comments);
+//        }
+
+        /* 사용자 관련 */
+//        String email = principal.getName(); // principle 객체에서 현재 로그인한 회원의 이메일 정보를 조회
+//        if (email != null) {
+//            model.addAttribute("email", email);
+//        }
+
         recipeService.updateView(recipeId); // views ++
         model.addAttribute("recipe", recipeFormDto);
+
         return "recipe/recipeDtl";
     }
 

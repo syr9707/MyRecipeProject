@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @ToString
 @Setter
@@ -39,6 +40,12 @@ public class Recipe extends BaseEntity {
     // 조회수 업데이트
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
+
+
+    // 연관관계 - 게시글 : 댓글 = 1 : N
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.REMOVE)
+    @OrderBy("id asc") // 댓글 정렬
+    private List<Comment> comments;
 
     public void updateRecipe(RecipeFormDto recipeFormDto) {
         this.recipeName = recipeFormDto.getRecipeName();

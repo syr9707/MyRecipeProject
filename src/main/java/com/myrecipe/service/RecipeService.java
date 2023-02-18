@@ -82,6 +82,11 @@ public class RecipeService {
                 .orElseThrow(EntityNotFoundException::new);
         RecipeFormDto recipeFormDto = RecipeFormDto.of(recipe);
         recipeFormDto.setRecipeImgDtoList(recipeImgDtoList);
+
+        if(recipe.getCreatedBy() != null) {
+            recipeFormDto.setUsername(recipe.getCreatedBy());
+        }
+
         return recipeFormDto;
     }
 
