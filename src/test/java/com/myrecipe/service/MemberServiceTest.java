@@ -3,6 +3,9 @@ package com.myrecipe.service;
 import com.myrecipe.dto.MemberFormDto;
 import com.myrecipe.entity.Member;
 import com.myrecipe.exception.AppException;
+import com.myrecipe.exception.member.MemberException;
+import com.myrecipe.exception.member.MemberExceptionType;
+import com.myrecipe.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -51,9 +55,9 @@ class MemberServiceTest {
 //        Member member1 = createMember();
 //        Member member2 = createMember();
 //        memberService.saveMember(member1);
-//        Throwable e = assertThrows(IllegalStateException.class, () -> {
+//        Throwable e = assertThrows(AppException.class, () -> {
 //            memberService.saveMember(member2);});
-//        assertEquals("이미 가입된 회원입니다.", e.getMessage());
+//        assertEquals("김길동은 이미 있습니다.", e.getMessage());
 //    }
 
     @Test
@@ -62,9 +66,10 @@ class MemberServiceTest {
         Member member1 = createMember();
         Member member2 = createMember();
         memberService.saveMember(member1);
-        Throwable e = assertThrows(AppException.class, () -> {
-            memberService.saveMember(member2);});
-        assertEquals("김길동은 이미 있습니다.", e.getMessage());
+
+        assertThat(assertThrows(MemberException.class,
+                () -> memberService.saveMember(member2)).getExceptionType()).isEqualTo(MemberExceptionType.ALREADY_EXIST_USERNAME);
+
     }
 
 }
