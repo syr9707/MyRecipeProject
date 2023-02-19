@@ -5,6 +5,7 @@ import com.myrecipe.entity.Member;
 import com.myrecipe.exception.AppException;
 import com.myrecipe.exception.member.MemberException;
 import com.myrecipe.exception.member.MemberExceptionType;
+import com.myrecipe.repository.MemberRepository;
 import com.myrecipe.service.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +30,17 @@ class MemberServiceTest {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Autowired
+    EntityManager em;
+
+    private void clear(){
+        em.flush();
+        em.clear();
+    }
 
     public Member createMember() {
         MemberFormDto memberFormDto = new MemberFormDto();
@@ -70,6 +84,37 @@ class MemberServiceTest {
         assertThat(assertThrows(MemberException.class,
                 () -> memberService.saveMember(member2)).getExceptionType()).isEqualTo(MemberExceptionType.ALREADY_EXIST_USERNAME);
 
+    }
+
+    @Test
+    @DisplayName("회원가입 실패 - 필드가 없음")
+    public void saveMemberFailTest() {
+        // given
+        MemberFormDto memberFormDto = new MemberFormDto();
+        memberFormDto.setEmail("test@email.com");
+        memberFormDto.setName(null);
+        memberFormDto.setAddress("경기도");
+        memberFormDto.setPassword("1234");
+        Member member = Member.createMember(memberFormDto, passwordEncoder);
+
+//        memberService.saveMember(member);
+
+        // when, then
+//        assertThat(memberRepository.findAll().size()).isEqualTo(0);
+        assertThrows(Exception.class, () -> memberService.saveMember(member));
+    }
+
+    @Test
+    @DisplayName("회원정부 수정 성공")
+    public void updateMember() {
+        Member member = createMember();
+        Member savedMember = memberService.saveMember(member);
+
+        clear();
+
+        String updateName = "변경된이름";
+        savedMember.setName(updateName);
+//        memberService.updateMember(member.getId(), savedMember);
     }
 
 }
