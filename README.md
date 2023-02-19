@@ -26,13 +26,13 @@
 <br>
 
 ## ✔ 사용 언어 및 개발 환경
-- IntelliJ
 - Java 11
 - Spring Boot 2.7
 - Maven
 - Spring Data JPA
 - MySQL
 - Thymeleaf
+- IntelliJ
 
 <br>
 
@@ -159,7 +159,7 @@
 시작할 땐 JPA의 개념이 MyBatis처럼 SQL 쿼리에 객체를 Mapping만 하는 
 단순 작업인 줄 알았습니다.
 
-Why? 왜 Custom Exception을 써야만 할까?
+Why? 왜 JPA를 사용했을까?
 1. 객체 설계 중심으로 생산성을 높일 수 있습니다.
 2. 필드를 변경해도 수정해야 할 코드가 줄어들어 유지보수가 편리합니다.
 3. JPA는 연관관계와 관련된 패러다임의 불일치를 해결해줍니다.
