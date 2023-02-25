@@ -48,4 +48,14 @@ public class CommentService {
         comment.update(dto.getComment());
     }
 
+    /* DELETE */
+    @Transactional
+    public void delete(Long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다." + id)
+        );
+
+        commentRepository.delete(comment);
+    }
+
 }

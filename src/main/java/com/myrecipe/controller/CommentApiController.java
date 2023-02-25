@@ -29,4 +29,11 @@ public class CommentApiController {
         return ResponseEntity.ok(id);
     }
 
+    /* DELETE */
+    @DeleteMapping("/posts/{id}/comments/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        commentService.delete(id);
+        return ResponseEntity.ok(id);
+    }
+
 }
