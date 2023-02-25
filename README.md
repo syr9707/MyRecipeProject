@@ -80,7 +80,7 @@
 <br>
 
 ## ✔ DB 구조
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/fabfbe87-79bc-4ba8-8906-2b569277681f/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230130%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230130T042206Z&X-Amz-Expires=86400&X-Amz-Signature=3c801411256bf5de2d5a1e7c6221c597c5cf9b50ec59851446d241c3d99b0af7&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/2e01ba2b-44c9-43c4-bfc1-e222e07909fd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230225%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230225T081158Z&X-Amz-Expires=86400&X-Amz-Signature=5998441d69e3d05c239bafedfa973e177a0f844a1db6b5b5b7e477c15bb5c6ba&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
 
 <br>
 
@@ -103,6 +103,9 @@
 4. 게시글 저장
    1. 회원이 아닐 시 게시글 저장 불가
    2. 게시글 중복 저장 불가능
+
+
+5. 게시글 댓글
 
 <br>
 
