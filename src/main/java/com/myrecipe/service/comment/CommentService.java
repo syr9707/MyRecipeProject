@@ -38,4 +38,14 @@ public class CommentService {
         return dto.getId();
     }
 
+    /* UPDATE */
+    @Transactional
+    public void update(Long id, CommentRequestDto dto) {
+        Comment comment = commentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다." + id)
+        );
+
+        comment.update(dto.getComment());
+    }
+
 }

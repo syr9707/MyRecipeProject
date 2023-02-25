@@ -22,4 +22,11 @@ public class CommentApiController {
         return ResponseEntity.ok(commentService.commentSave(principal.getName(), id, dto));
     }
 
+    /* UPDATE */
+    @PutMapping("/posts/{id}/comments/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody CommentRequestDto dto) {
+        commentService.update(id, dto);
+        return ResponseEntity.ok(id);
+    }
+
 }

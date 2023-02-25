@@ -30,4 +30,9 @@ public class Comment extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member; // 작성자
 
+    /* 댓글 수정 */
+    public void update(String comment) {
+        this.comment = comment;
+    }
+
 }
