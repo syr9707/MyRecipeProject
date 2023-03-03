@@ -80,7 +80,7 @@
 <br>
 
 ## ✔ DB 구조
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/2e01ba2b-44c9-43c4-bfc1-e222e07909fd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230225%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230225T081158Z&X-Amz-Expires=86400&X-Amz-Signature=5998441d69e3d05c239bafedfa973e177a0f844a1db6b5b5b7e477c15bb5c6ba&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0026268a-e4c0-4ad0-a370-29e756bcb0dd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230303%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230303T060638Z&X-Amz-Expires=86400&X-Amz-Signature=f7ccf5b9b080d467617313dbb16fe93d863a35cf48e0d30e07511abfb9e40378&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
 
 <br>
 
@@ -443,6 +443,55 @@ private void validateDuplicateMember(Member member) {
 }
 ```
 
+* 단계 3 : RuntimeException을 상속받는 BaseException 생성
+```java
+public interface BaseExceptionType {
+
+    // 에러 코드
+    int getErrorCode();
+
+    // Http 상태
+    HttpStatus getHttpStatus();
+
+    // 에러 메세지
+    String getErrorMessage();
+
+}
+```
+```java
+public enum MemberExceptionType implements BaseExceptionType {
+
+    // 회원가입, 로그인시
+    ALREADY_EXIST_USERNAME(600, HttpStatus.CONFLICT, "이미 존재하는 아이디입니다."),
+    NOT_FOUND_MEMBER(602, HttpStatus.NOT_FOUND, "회원 정보가 없습니다.");
+
+    private int errorCode;
+    private HttpStatus httpStatus;
+    private String errorMessage;
+
+    MemberExceptionType(int errorCode, HttpStatus httpStatus, String errorMessage) {
+        this.errorCode = errorCode;
+        this.httpStatus = httpStatus;
+        this.errorMessage = errorMessage;
+    }
+
+    @Override
+    public int getErrorCode() {
+        return this.errorCode;
+    }
+
+    @Override
+    public HttpStatus getHttpStatus() {
+        return this.httpStatus;
+    }
+
+    @Override
+    public String getErrorMessage() {
+        return this.errorMessage;
+    }
+}
+```
+
 </div>
 </details>
 
@@ -717,6 +766,41 @@ public void saveDuplicateCartTest() {
 </details>
 
 <br>
+<br>
+<br>
+
+## 🚵🏻 후기 & 앞으로 개선할 내용
+```text
+* 한 줄 정리 : 어려울수록 기본에 충실해야 한다.
+
+1. 처음부터 많은 것을 하려 했을 땐 앞이 막막했습니다.
+하지만 어려울수록 기본으로 돌아가자는 사실을 명심했고, 
+작은 기능부터 만들어나가는 것을 선택했습니다.
+- 회원 가입 → 회원이 등록하는 게시물 → 게시물 이미지 등록 → 게시물 마이페이지 저장
+- 이후 예외 상황이 발생하는 경우를 생각해보고, 하나씩 적용시켜보았습니다.
+
+2. JPA를 사용하려면, 객체지향에 대한 깊은 이해가 필요하다는 것을 알게되었습니다.
+객체지향은 정말 어렵지만, 매우 중요한 내용이고 근본입니다.
+
+3. 프로젝트에 대한 추가적인 생각들은, 곧 나의 부족한 부분을 채워가는 과정이다.
+- 기능의 전체적인 큰 틀을 만들어 놓고, 예외 발생과 구조에 대한 생각을 하면서 프로젝트의 부족한 부분들이 보였습니다.
+- 그 부분을 개선해나가는 과정에선 또 다른 부족한 점들이 보이는 것이 반복되었습니다.
+- 개발을 처음 시작했을 땐 부족한 부분을 마주하는 것이 두려웠지만, 지금은 성장해나가는 과정이라는 생각으로 부딪혀보고 있습니다
+
+5. QueryDSL이 어렵고 와닿지 않는 개념이이었습니다.
+- SQLMapper로 검색 기능을 만들었을 땐, 직관적이어서 이해가 빠르게 되었는데, Querydsl은 매우 어렵게 다가왔습니다.
+- Java 코드를 작성하듯이 쿼리문을 작성하는 것이 신세계였습니다.
+
+6. 더 많은 Test Code의 학습이 필요하다는 걸 느낄수록 아쉬웠습니다.
+- 스스로 작성한 Test Code의 로직이 틀려, 틀린 테스트케이스를 만들어도 통과가 되는 현상이 나타났습니다.
+- Test Code에 대한 더 깊은 이해와 학습을 통해 구현하고자 하는 기능의 테스트코드를 작성하고, 
+그에 대한 프로젝트 진행 방식을 적용시켜보고 싶습니다다.
+
+
+더 자세한 내용은 Notion에 있습니다.
+
+```
+
 <br>
 <br>
 
