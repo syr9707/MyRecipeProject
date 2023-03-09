@@ -92,7 +92,7 @@ class MemberServiceTest {
         // given
         MemberFormDto memberFormDto = new MemberFormDto();
         memberFormDto.setEmail("test@email.com");
-        memberFormDto.setName(null);
+//        memberFormDto.setName(null);
         memberFormDto.setAddress("경기도");
         memberFormDto.setPassword("1234");
         Member member = Member.createMember(memberFormDto, passwordEncoder);
@@ -100,21 +100,34 @@ class MemberServiceTest {
 //        memberService.saveMember(member);
 
         // when, then
-//        assertThat(memberRepository.findAll().size()).isEqualTo(0);
+        assertThat(memberRepository.findAll().size()).isEqualTo(0);
         assertThrows(Exception.class, () -> memberService.saveMember(member));
     }
 
     @Test
-    @DisplayName("회원정부 수정 성공")
+    @DisplayName("회원정보 수정 성공 - 이름 변경")
     public void updateMember() {
+        // given
         Member member = createMember();
-        Member savedMember = memberService.saveMember(member);
+        memberService.saveMember(member);
 
-        clear();
+        Member findMember = memberRepository.findById(member.getId()).orElseThrow(
+                () -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER)
+        );
 
+        // when
         String updateName = "변경된이름";
-        savedMember.setName(updateName);
-//        memberService.updateMember(member.getId(), savedMember);
+        findMember.setName(updateName);
+
+        MemberFormDto memberFormDto = MemberFormDto.of(member);
+        memberService.updateMember(member.getId(), memberFormDto);
+
+        // then
+        Member updateMember = memberRepository.findById(findMember.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원 없습니다. userId = " + findMember.getId()));
+
+        assertThat(updateMember).isSameAs(findMember);
+        assertThat(updateMember.getName()).isEqualTo(updateName);
     }
 
 }
