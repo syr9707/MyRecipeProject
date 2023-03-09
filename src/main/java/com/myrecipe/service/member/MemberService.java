@@ -73,8 +73,8 @@ public class MemberService implements UserDetailsService {
         Member findMember = memberRepository.findById(memberId)
                 .orElseThrow(EntityNotFoundException::new);
 
-        if(findMember != null) {
-            throw new MemberException(MemberExceptionType.ALREADY_EXIST_USERNAME);
+        if(findMember == null) {
+            throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
         }
 
         String password = passwordEncoder.encode(findMember.getPassword());
