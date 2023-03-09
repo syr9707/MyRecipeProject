@@ -16,24 +16,24 @@ public class CommentApiController {
     private final CommentService commentService;
 
     /* CREATE */
-    @PostMapping("/posts/{id}/comments")
-    public ResponseEntity commentSave(@PathVariable Long id, @RequestBody CommentRequestDto dto, Principal principal) {
+    @PostMapping("/recipe/{recipeId}/comments")
+    public ResponseEntity commentSave(@PathVariable("recipeId") Long recipeId, @RequestBody CommentRequestDto dto, Principal principal) {
 
-        return ResponseEntity.ok(commentService.commentSave(principal.getName(), id, dto));
+        return ResponseEntity.ok(commentService.commentSave(principal.getName(), recipeId, dto));
     }
 
     /* UPDATE */
-    @PutMapping("/posts/{id}/comments/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody CommentRequestDto dto) {
-        commentService.update(id, dto);
-        return ResponseEntity.ok(id);
+    @PutMapping("/recipe/{recipeId}/comments/{commentId}")
+    public ResponseEntity update(@PathVariable("recipeId") Long recipeId, @RequestBody CommentRequestDto dto, @PathVariable("commentId") Long commentId) {
+        commentService.update(commentId, dto);
+        return ResponseEntity.ok(commentId);
     }
 
     /* DELETE */
-    @DeleteMapping("/posts/{id}/comments/{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
-        commentService.delete(id);
-        return ResponseEntity.ok(id);
+    @DeleteMapping("/recipe/{recipeId}/comments/{commentId}")
+    public ResponseEntity delete(@PathVariable("recipeId") Long recipeId, @PathVariable("commentId") Long commentId) {
+        commentService.delete(commentId);
+        return ResponseEntity.ok(commentId);
     }
 
 }
