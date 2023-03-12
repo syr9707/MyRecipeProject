@@ -13,8 +13,9 @@
 4. [후기](#-후기)
 5. [DB 구조](#-db-구조)
 6. [구현 기능](#-구현-기능)
-7. [학습 내용 & 개선된 내용](#-학습-내용--개선된-내용)
-8. [후기 & 앞으로 개선할 내용](#-후기--앞으로-개선할-내용)
+7. [주요 진행 상황](#-주요-진행-상황)
+8. [학습 내용 & 개선된 내용](#-학습-내용--개선된-내용)
+9. [후기 & 앞으로 개선할 내용](#-후기--앞으로-개선할-내용)
 
 <br>
 
@@ -109,6 +110,31 @@
 5. 게시글 댓글
 
 <br>
+<br>
+
+## 📝주요 진행 상황
+0. RESTful API 적용
+    - 모든 API를 POST로 보냈던 과거에서, GET, POST, PUT, DELETE로 목적에 맞게 나누기
+1. MyBatis → JPA
+    - SQL Mapper인 MyBatis와 Java ORM인 JPA의 차이를 체감
+    - 1 : N 관계의 영속성 전이 구현
+2. Spring Security 적용
+    - Spring Security를 사용하기 위한 분석
+    - 단순 DB insert에서, Spring Security를 이용해 권한을 부여하는 구현기
+3. Custom Exception 적용
+    - 엔티티 별 예외 발생 상황을 한 곳에 모아 처리하기
+    - Ajax로 일일이 체크했던 과거에서, Spring BindingResult와 Validation을 이용한 유효성 검증 구현기
+4. DTO 적용
+    - DTO는 왜 만드는 것일까?에 대한 고찰
+    - Entity 외부 노출에 대비해, 용도에 따른 EntityDTO 4개로 나누는 구현기
+5. Test Code 작성
+    - Test Code를 통해 View가 없어도 구현 기능이 정상 작동 되는지 테스트 가능
+    - Mock Test로 Security 권한 테스트 구현기
+
+
+<br>
+<br>
+
 
 ## ✏ 학습 내용 & 개선된 내용
 ### 0. 프로젝트 목적 변경
