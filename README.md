@@ -112,7 +112,7 @@
 <br>
 <br>
 
-## 📝주요 진행 상황
+## 📝 주요 진행 상황
 0. RESTful API 적용
     - 모든 API를 POST로 보냈던 과거에서, GET, POST, PUT, DELETE로 목적에 맞게 나누기
 1. MyBatis → JPA
