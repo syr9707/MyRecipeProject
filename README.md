@@ -114,22 +114,22 @@
 
 ## 📝 주요 진행 상황
 0. RESTful API 적용
-    - 모든 API를 POST로 보냈던 과거에서, GET, POST, PUT, DELETE로 목적에 맞게 나누기
+    - [모든 API를 POST로 보냈던 과거에서, GET, POST, PUT, DELETE로 목적에 맞게 나누기](https://ummmmchicken.tistory.com/entry/JPA-1-N-%EA%B4%80%EA%B3%84%EB%A5%BC-%EB%B6%84%EC%84%9D%ED%95%B4%EB%B3%B4%EC%9E%90)
 1. MyBatis → JPA
-    - SQL Mapper인 MyBatis와 Java ORM인 JPA의 차이를 체감
-    - 1 : N 관계의 영속성 전이 구현
+    - [SQL Mapper인 MyBatis와 Java ORM인 JPA의 차이를 체감](https://ummmmchicken.tistory.com/entry/JPA-MyBatis%EC%99%80-JPA-%EB%8F%84%EB%8C%80%EC%B2%B4-%EB%AD%90%EA%B0%80-%EB%8B%A4%EB%A5%BC%EA%B9%8C)
+    - [1 : N 관계의 영속성 전이 구현](https://ummmmchicken.tistory.com/entry/JPA-1-N-%EA%B4%80%EA%B3%84%EB%A5%BC-%EB%B6%84%EC%84%9D%ED%95%B4%EB%B3%B4%EC%9E%90)
 2. Spring Security 적용
-    - Spring Security를 사용하기 위한 분석
-    - 단순 DB insert에서, Spring Security를 이용해 권한을 부여하는 구현기
+    - [Spring Security를 사용하기 위한 분석](https://ummmmchicken.tistory.com/entry/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0%EB%A5%BC-%EB%B6%84%EC%84%9D%ED%95%B4%EB%B3%B4%EC%9E%90)
+    - [단순 DB insert에서, Spring Security를 이용해 권한을 부여하는 구현기](https://ummmmchicken.tistory.com/entry/Spring-Security%EB%A1%9C-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%EC%9D%84-%ED%95%B4%EB%B3%B4%EC%9E%90-1)
 3. Custom Exception 적용
-    - 엔티티 별 예외 발생 상황을 한 곳에 모아 처리하기
-    - Ajax로 일일이 체크했던 과거에서, Spring BindingResult와 Validation을 이용한 유효성 검증 구현기
+    - [엔티티 별 예외 발생 상황을 한 곳에 모아 처리하기](https://ummmmchicken.tistory.com/entry/Custom-Exception-%ED%95%B4%EB%B3%B4%EA%B8%B0)
+    - [Ajax로 일일이 체크했던 과거에서, Spring BindingResult와 Validation을 이용한 유효성 검증 구현기](https://ummmmchicken.tistory.com/entry/%EC%97%90%EB%9F%AC-%ED%9A%8C%EC%9B%90-%EA%B0%80%EC%9E%85-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%97%90%EB%9F%AC-%EC%B2%98%EB%A6%AC%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0)
 4. DTO 적용
-    - DTO는 왜 만드는 것일까?에 대한 고찰
-    - Entity 외부 노출에 대비해, 용도에 따른 EntityDTO 4개로 나누는 구현기
+    - [DTO는 왜 만드는 것일까?에 대한 고찰](https://ummmmchicken.tistory.com/entry/%EC%83%9D%EA%B0%81%EB%93%A4-%EB%8F%84%EB%8C%80%EC%B2%B4-DTO%EB%A5%BC-%EC%99%9C-%EB%A7%8C%EB%93%9C%EB%8A%94-%EA%B2%83%EC%9D%B8%EA%B0%80%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0)
+    - [Entity 외부 노출에 대비해, 용도에 따른 EntityDTO 4개로 나누는 구현기](https://ummmmchicken.tistory.com/entry/CRUD%EB%A5%BC-%EB%B6%84%EC%84%9D%ED%95%B4%EB%B3%B4%EC%9E%90-1-%EA%B2%8C%EC%8B%9C%EA%B8%80-%EC%83%9D%EC%84%B1-API)
 5. Test Code 작성
     - Test Code를 통해 View가 없어도 구현 기능이 정상 작동 되는지 테스트 가능
-    - Mock Test로 Security 권한 테스트 구현기
+    - [Mock Test로 Security 권한 테스트 구현기](https://ummmmchicken.tistory.com/entry/Spring-Security%EB%A1%9C-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%EC%9D%84-%ED%95%B4%EB%B3%B4%EC%9E%90-3-SecurityConfig-%EB%B0%8F-%EB%A1%9C%EA%B7%B8%EC%9D%B8)
 
 
 <br>
