@@ -82,7 +82,7 @@
 <br>
 
 ## ✔ DB 구조
-![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0026268a-e4c0-4ad0-a370-29e756bcb0dd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230303%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230303T060638Z&X-Amz-Expires=86400&X-Amz-Signature=f7ccf5b9b080d467617313dbb16fe93d863a35cf48e0d30e07511abfb9e40378&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
+![](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/2e01ba2b-44c9-43c4-bfc1-e222e07909fd/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230321%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230321T033932Z&X-Amz-Expires=86400&X-Amz-Signature=b9a6ac179829dd8b90a615c9c431120b23b9a9e36c78d9a4082c52cab83d3f4b&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22Untitled.png%22&x-id=GetObject)
 
 <br>
 
